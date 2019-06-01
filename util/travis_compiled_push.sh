@@ -13,7 +13,7 @@ if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]] ; the
 git checkout master
 git diff --diff-filter=M --name-only -n 1 -z ${TRAVIS_COMMIT_RANGE} | xargs -0 dos2unix
 git diff --diff-filter=M --name-only -n 1 -z ${TRAVIS_COMMIT_RANGE} | xargs -0 git add
-git commit -m "convert to unix line-endings [skip ci]" && git push git@github.com:qmk/qmk_firmware.git master
+git commit -m "convert to unix line-endings [skip ci]" && git push git@github.com:duncanyoyo1/qmk_firmware.git master
 
 increment_version ()
 {
@@ -35,7 +35,7 @@ if [[ $NEFM -gt 0 ]] ; then
 	until git tag $newtag; do
 		newtag=$(increment_version $newtag)
 	done
-	git push --tags git@github.com:qmk/qmk_firmware.git
+	git push --tags git@github.com:duncanyoyo1/qmk_firmware.git
 else
 	echo "No essential files modified."
 fi
@@ -43,7 +43,7 @@ fi
 if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[skip build]"* ]] ; then
 	make generate-keyboards-file SILENT=true > .keyboards
 	cd ..
-	git clone git@github.com:qmk/qmk.fm.git
+	git clone git@github.com:duncanyoyo1/qmk.fm.git
 	cd qmk.fm
 	mv ../qmk_firmware/id_rsa_qmk.fm id_rsa_qmk.fm
 	mv ../qmk_firmware/.keyboards .
@@ -81,8 +81,8 @@ if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[skip build]"* ]] ; then
 
 	bash _util/generate_keyboard_page.sh
 	git add -A
-	git commit -m "generated from qmk/qmk_firmware@${rev}"
-	git push git@github.com:qmk/qmk.fm.git
+	git commit -m "generated from duncanyoyo1/qmk_firmware@${rev}"
+	git push git@github.com:duncanyoyo1/qmk.fm.git
 
 fi
 
