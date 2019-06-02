@@ -123,8 +123,8 @@ led_setup_t leds_rainbow_s[] = {
 void *led_setups[] = {
     leds_rainbow_s,
     leds_rainbow_ns,
-	leds_cyan_pink,
-	leds_cyan_pink_s,
+    leds_cyan_pink,
+    leds_cyan_pink_s,
     leds_yellow,
     leds_red,
     leds_green,
