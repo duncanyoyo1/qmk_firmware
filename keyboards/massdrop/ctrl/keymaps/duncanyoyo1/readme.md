@@ -1,4 +1,4 @@
-![MassDrop CTRL Layout Image](https://i.imgur.com/xH3udvW.png)
+![MassDrop CTRL Layout Image](https://i.imgur.com/UHgWCG3.png)
 
 # Duncanyoyo1's layout for the MassDrop CTRL
 
