@@ -2,9 +2,9 @@
 
 # Duncanyoyo1's layout for the MassDrop CTRL
 
-This layout is the same as the default layout, with the exception that Caps Lock is Ctrl unless Left Shift is held, then it will act as Caps Lock.
+This layout is similar default layout, with Caps Lock as Ctrl unless Left Shift is held, then it will act as Caps Lock. I have also moved the normal Fn layer to Fn+Menu. This allows the use of the numpad with just Fn.
 
-I have also added numpad 0-9 on the number row while holding Fn.
+I have also added numpad 0-9 on the number row while holding Fn as well as a number pad on the right hand side of the board.
 
 
 The Massdrop CTRL is a TKL mechanical keyboard featuring dual USB-C connectors, an integrated Hi-Speed USB 2.0 hub, and fully customizable RGB backlighting and underlighting.

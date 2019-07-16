@@ -43,6 +43,25 @@ led_setup_t leds_cyan_pink_s[] = {
     { .end = 1 },
 };
 
+//Rasta
+led_setup_t leds_rasta[] = {
+	{ .hs = 0,  .he = 33, .rs = 255, .re = 255, .gs = 0, .ge = 0, .bs = 0, .be = 0, .ef = EF_NONE },
+	{ .hs = 33, .he = 66, .rs = 255, .re = 255, .gs = 255, .ge = 255, .bs = 0, .be = 0, .ef = EF_NONE },
+	{ .hs = 66, .he = 100, .rs = 0, .re = 0, .gs = 255, .ge = 255, .bs = 0, .be = 0, .ef = EF_NONE },
+	{ .end = 1 },
+};
+
+//Rasta Scroll
+led_setup_t leds_rasta_s[] = {
+	{ .hs = 0,  .he = 16, .rs = 255, .re = 255, .gs = 0, .ge = 0, .bs = 0, .be = 0, .ef = EF_SCR_R },
+	{ .hs = 16, .he = 33, .rs = 255, .re = 255, .gs = 0, .ge = 255, .bs = 0, .be = 0, .ef = EF_SCR_R },
+	{ .hs = 33, .he = 50, .rs = 255, .re = 255, .gs = 255, .ge = 255, .bs = 0, .be = 0, .ef = EF_SCR_R },
+	{ .hs = 50, .he = 66, .rs = 255, .re = 0, .gs = 255, .ge = 255, .bs = 0, .be = 0, .ef = EF_SCR_R },
+	{ .hs = 66, .he = 84, .rs = 0, .re = 0, .gs = 255, .ge = 255, .bs = 0, .be = 0, .ef = EF_SCR_R },
+	{ .hs = 84, .he = 100, .rs = 0, .re = 255, .gs = 255, .ge = 0, .bs = 0, .be = 0, .ef = EF_SCR_R },
+	{ .end = 1 },
+};
+
 //Yellow
 led_setup_t leds_yellow[] = {
     { .hs = 0, .he = 100, .rs = 255, .re = 255, .gs = 255, .ge = 255, .bs = 0, .be = 0, .ef = EF_NONE },
@@ -125,6 +144,8 @@ void *led_setups[] = {
     leds_rainbow_ns,
     leds_cyan_pink,
     leds_cyan_pink_s,
+	leds_rasta,
+	leds_rasta_s,
     leds_yellow,
     leds_red,
     leds_green,
