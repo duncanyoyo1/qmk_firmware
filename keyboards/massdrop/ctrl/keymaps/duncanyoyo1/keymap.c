@@ -9,9 +9,7 @@ enum ctrl_keycodes {
     L_PSD,              //LED Pattern Speed Decrease                                //Working
     L_T_MD,             //LED Toggle Mode                                           //Working
     L_T_ONF,            //LED Toggle On / Off                                       //Working
-    L_ON,               //LED On                                                    //Broken
-    L_OFF,              //LED Off                                                   //Broken
-    L_T_BR,             //LED Toggle Breath Effect                                  //Working
+	L_T_BR,             //LED Toggle Breath Effect                                  //Working
     L_T_PTD,            //LED Toggle Scrolling Pattern Direction                    //Working
     U_T_AGCR,           //USB Toggle Automatic GCR control                          //Working
 	DBG_TOG,            //DEBUG Toggle On / Off                                     //
@@ -47,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NLCK, KC_P1,   KC_P2,   KC_P3,     KC_P4,   KC_P5,   KC_P6,   KC_P7,   KC_P8,   KC_P9,   KC_P0, KC_PMNS, KC_PPLS, KC_BSPC,   KC_MPLY, KC_MSTP, KC_VOLU, \
 		_______, _______, _______, _______, _______, _______, _______,   KC_P4,   KC_P5,   KC_P6, _______, _______, _______, _______,   KC_MPRV, KC_MNXT, KC_VOLD, \
 		_______, _______, _______, _______, _______, _______, _______,   KC_P1,   KC_P2,   KC_P3, _______, _______, _______, \
-        _______, _______, _______, _______, _______, _______, _______,   KC_P0, _______, _______, _______, _______,                              _______, \
+        _______, _______, _______, _______, _______, _______, _______,   KC_P0, _______, KC_PDOT, _______, _______,                              _______, \
         _______, _______, _______,                   _______,                   _______, _______, MO(3), _______,            _______, _______, _______ \
     ),
 	[3] = LAYOUT(
@@ -140,18 +138,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case L_T_ONF:
             if (record->event.pressed) {
                 led_enabled = !led_enabled;
-                I2C3733_Control_Set(led_enabled);
-            }
-            return false;
-        case L_ON:
-            if (record->event.pressed) {
-                led_enabled = 1;
-                I2C3733_Control_Set(led_enabled);
-            }
-            return false;
-        case L_OFF:
-            if (record->event.pressed) {
-                led_enabled = 0;
                 I2C3733_Control_Set(led_enabled);
             }
             return false;
