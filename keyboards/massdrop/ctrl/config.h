@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define MANUFACTURER        "Massdrop Inc."
 #define PRODUCT             "CTRL Keyboard"
-#define SERIAL_NUM          "CTRL High-Profile 000087 27017"
+#define SERIAL_NUM          "Unavailable"
 
 /* key matrix size */
 #define MATRIX_ROWS 11
