@@ -13,5 +13,8 @@
         "*.cpp": "cpp",
         "*.hpp": "cpp",
         "xstddef": "c"
-    }
+    },
+    "editor.fontSize": 12,
+    "editor.fontFamily": "'SF Mono', 'Source Code Pro', 'Input Mono' ",
+    "C_Cpp.default.intelliSenseMode": "gcc-x64"
 }
