@@ -52,8 +52,11 @@ static inline bool IS_RELEASED(keyevent_t event) { return (!IS_NOEVENT(event) &&
 /* Tick event */
 #define TICK \
     (keyevent_t) { .key = (keypos_t){.row = 255, .col = 255}, .pressed = false, .time = (timer_read() | 1) }
+<<<<<<< HEAD
 
 void disable_jtag(void);
+=======
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
 
 /* it runs once at early stage of startup before keyboard_init. */
 void keyboard_setup(void);
