@@ -271,6 +271,15 @@ static void print_eeconfig(void) {
     print(".capslock_to_control: ");
     print_dec(kc.capslock_to_control);
     print("\n");
+<<<<<<< HEAD
+=======
+    print(".swap_lctl_lgui: ");
+    print_dec(kc.swap_lctl_lgui);
+    print("\n");
+    print(".swap_rctl_rgui: ");
+    print_dec(kc.swap_rctl_rgui);
+    print("\n");
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
     print(".swap_lalt_lgui: ");
     print_dec(kc.swap_lalt_lgui);
     print("\n");

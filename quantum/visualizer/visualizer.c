@@ -424,7 +424,7 @@ uint8_t visualizer_get_mods() {
 void visualizer_set_user_data(void* u) { memcpy(user_data, u, VISUALIZER_USER_DATA_SIZE); }
 #endif
 
-void visualizer_update(uint32_t default_state, uint32_t state, uint8_t mods, uint32_t leds) {
+void visualizer_update(layer_state_t default_state, layer_state_t state, uint8_t mods, uint32_t leds) {
     // Note that there's a small race condition here, the thread could read
     // a state where one of these are set but not the other. But this should
     // not really matter as it will be fixed during the next loop step.
