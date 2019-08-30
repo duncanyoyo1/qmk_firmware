@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 /*
 Copyright 2019 Duncanyoyo1 <duncanyoyo1@gmail.com>
 
@@ -14,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+>>>>>>> duncanyoyo1
 #ifdef RGB_MATRIX_ENABLE
 #include "ctrl.h"
 
