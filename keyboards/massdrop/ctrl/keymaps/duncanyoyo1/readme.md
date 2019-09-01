@@ -1,4 +1,4 @@
-![MassDrop CTRL Layout Image](https://raw.githubusercontent.com/duncanyoyo1/qmk_firmware/duncanyoyo1/keyboards/massdrop/ctrl/keymaps/duncanyoyo1/keyboard-layout.png)
+![MassDrop CTRL Layout Image](https://github.com/duncanyoyo1/qmk_firmware/raw/master/keyboards/massdrop/ctrl/keymaps/duncanyoyo1/keyboard-layout.png)
 
 # Duncanyoyo1's layout for the MassDrop CTRL
 
