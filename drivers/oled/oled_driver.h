@@ -140,6 +140,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Font render height
 #if !defined(OLED_FONT_HEIGHT)
 #    define OLED_FONT_HEIGHT 8
+<<<<<<< HEAD
+=======
+#endif
+
+#if !defined(OLED_TIMEOUT)
+#    if defined(OLED_DISABLE_TIMEOUT)
+#        define OLED_TIMEOUT 0
+#    else
+#        define OLED_TIMEOUT 60000
+#    endif
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #endif
 
 // OLED Rotation enum values are flags

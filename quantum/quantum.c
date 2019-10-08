@@ -22,10 +22,13 @@
 
 #ifdef PROTOCOL_LUFA
 #    include "outputselect.h"
+<<<<<<< HEAD
 #endif
 
 #ifndef BREATHING_PERIOD
 #    define BREATHING_PERIOD 6
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #endif
 
 #include "backlight.h"
@@ -66,10 +69,13 @@ extern backlight_config_t backlight_config;
 #        define AG_SWAP_SONG SONG(AG_SWAP_SOUND)
 #    endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 float goodbye_song[][2] = GOODBYE_SONG;
 float ag_norm_song[][2] = AG_NORM_SONG;
 float ag_swap_song[][2] = AG_SWAP_SONG;
 =======
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #    ifndef CG_NORM_SONG
 #        define CG_NORM_SONG SONG(AG_NORM_SOUND)
 #    endif
@@ -81,7 +87,10 @@ float ag_norm_song[][2] = AG_NORM_SONG;
 float ag_swap_song[][2] = AG_SWAP_SONG;
 float cg_norm_song[][2] = CG_NORM_SONG;
 float cg_swap_song[][2] = CG_SWAP_SONG;
+<<<<<<< HEAD
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #    ifdef DEFAULT_LAYER_SONGS
 float default_layer_songs[][16][2] = DEFAULT_LAYER_SONGS;
 #    endif
@@ -240,6 +249,7 @@ bool process_record_quantum(keyrecord_t *record) {
 #ifdef TAP_DANCE_ENABLE
     preprocess_tap_dance(keycode, record);
 #endif
+<<<<<<< HEAD
 
     if (!(
 #if defined(KEY_LOCK_ENABLE)
@@ -1030,6 +1040,452 @@ bool process_record_quantum(keyrecord_t *record) {
             break;
 
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+
+    if (!(
+#if defined(KEY_LOCK_ENABLE)
+            // Must run first to be able to mask key_up events.
+            process_key_lock(&keycode, record) &&
+#endif
+#if defined(AUDIO_ENABLE) && defined(AUDIO_CLICKY)
+            process_clicky(keycode, record) &&
+#endif  // AUDIO_CLICKY
+#ifdef HAPTIC_ENABLE
+            process_haptic(keycode, record) &&
+#endif  // HAPTIC_ENABLE
+#if defined(RGB_MATRIX_ENABLE)
+            process_rgb_matrix(keycode, record) &&
+#endif
+            process_record_kb(keycode, record) &&
+#if defined(MIDI_ENABLE) && defined(MIDI_ADVANCED)
+            process_midi(keycode, record) &&
+#endif
+#ifdef AUDIO_ENABLE
+            process_audio(keycode, record) &&
+#endif
+#ifdef STENO_ENABLE
+            process_steno(keycode, record) &&
+#endif
+#if (defined(AUDIO_ENABLE) || (defined(MIDI_ENABLE) && defined(MIDI_BASIC))) && !defined(NO_MUSIC_MODE)
+            process_music(keycode, record) &&
+#endif
+#ifdef TAP_DANCE_ENABLE
+            process_tap_dance(keycode, record) &&
+#endif
+#if defined(UNICODE_ENABLE) || defined(UNICODEMAP_ENABLE) || defined(UCIS_ENABLE)
+            process_unicode_common(keycode, record) &&
+#endif
+#ifdef LEADER_ENABLE
+            process_leader(keycode, record) &&
+#endif
+#ifdef COMBO_ENABLE
+            process_combo(keycode, record) &&
+#endif
+#ifdef PRINTING_ENABLE
+            process_printer(keycode, record) &&
+#endif
+#ifdef AUTO_SHIFT_ENABLE
+            process_auto_shift(keycode, record) &&
+#endif
+#ifdef TERMINAL_ENABLE
+            process_terminal(keycode, record) &&
+#endif
+#ifdef SPACE_CADET_ENABLE
+            process_space_cadet(keycode, record) &&
+#endif
+            true)) {
+        return false;
+    }
+
+    // Shift / paren setup
+
+    switch (keycode) {
+        case RESET:
+            if (record->event.pressed) {
+                reset_keyboard();
+            }
+            return false;
+        case DEBUG:
+            if (record->event.pressed) {
+                debug_enable ^= 1;
+                if (debug_enable) {
+                    print("DEBUG: enabled.\n");
+                } else {
+                    print("DEBUG: disabled.\n");
+                }
+            }
+            return false;
+        case EEPROM_RESET:
+            if (record->event.pressed) {
+                eeconfig_init();
+            }
+            return false;
+#ifdef FAUXCLICKY_ENABLE
+        case FC_TOG:
+            if (record->event.pressed) {
+                FAUXCLICKY_TOGGLE;
+            }
+            return false;
+        case FC_ON:
+            if (record->event.pressed) {
+                FAUXCLICKY_ON;
+            }
+            return false;
+        case FC_OFF:
+            if (record->event.pressed) {
+                FAUXCLICKY_OFF;
+            }
+            return false;
+#endif
+#if defined(RGBLIGHT_ENABLE) || defined(RGB_MATRIX_ENABLE)
+        case RGB_TOG:
+// Split keyboards need to trigger on key-up for edge-case issue
+#    ifndef SPLIT_KEYBOARD
+            if (record->event.pressed) {
+#    else
+            if (!record->event.pressed) {
+#    endif
+                rgblight_toggle();
+            }
+            return false;
+        case RGB_MODE_FORWARD:
+            if (record->event.pressed) {
+                uint8_t shifted = get_mods() & (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT));
+                if (shifted) {
+                    rgblight_step_reverse();
+                } else {
+                    rgblight_step();
+                }
+            }
+            return false;
+        case RGB_MODE_REVERSE:
+            if (record->event.pressed) {
+                uint8_t shifted = get_mods() & (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT));
+                if (shifted) {
+                    rgblight_step();
+                } else {
+                    rgblight_step_reverse();
+                }
+            }
+            return false;
+        case RGB_HUI:
+// Split keyboards need to trigger on key-up for edge-case issue
+#    ifndef SPLIT_KEYBOARD
+            if (record->event.pressed) {
+#    else
+            if (!record->event.pressed) {
+#    endif
+                rgblight_increase_hue();
+            }
+            return false;
+        case RGB_HUD:
+// Split keyboards need to trigger on key-up for edge-case issue
+#    ifndef SPLIT_KEYBOARD
+            if (record->event.pressed) {
+#    else
+            if (!record->event.pressed) {
+#    endif
+                rgblight_decrease_hue();
+            }
+            return false;
+        case RGB_SAI:
+// Split keyboards need to trigger on key-up for edge-case issue
+#    ifndef SPLIT_KEYBOARD
+            if (record->event.pressed) {
+#    else
+            if (!record->event.pressed) {
+#    endif
+                rgblight_increase_sat();
+            }
+            return false;
+        case RGB_SAD:
+// Split keyboards need to trigger on key-up for edge-case issue
+#    ifndef SPLIT_KEYBOARD
+            if (record->event.pressed) {
+#    else
+            if (!record->event.pressed) {
+#    endif
+                rgblight_decrease_sat();
+            }
+            return false;
+        case RGB_VAI:
+// Split keyboards need to trigger on key-up for edge-case issue
+#    ifndef SPLIT_KEYBOARD
+            if (record->event.pressed) {
+#    else
+            if (!record->event.pressed) {
+#    endif
+                rgblight_increase_val();
+            }
+            return false;
+        case RGB_VAD:
+// Split keyboards need to trigger on key-up for edge-case issue
+#    ifndef SPLIT_KEYBOARD
+            if (record->event.pressed) {
+#    else
+            if (!record->event.pressed) {
+#    endif
+                rgblight_decrease_val();
+            }
+            return false;
+        case RGB_SPI:
+            if (record->event.pressed) {
+                rgblight_increase_speed();
+            }
+            return false;
+        case RGB_SPD:
+            if (record->event.pressed) {
+                rgblight_decrease_speed();
+            }
+            return false;
+        case RGB_MODE_PLAIN:
+            if (record->event.pressed) {
+                rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+            }
+            return false;
+        case RGB_MODE_BREATHE:
+#    ifdef RGBLIGHT_EFFECT_BREATHING
+            if (record->event.pressed) {
+                if ((RGBLIGHT_MODE_BREATHING <= rgblight_get_mode()) && (rgblight_get_mode() < RGBLIGHT_MODE_BREATHING_end)) {
+                    rgblight_step();
+                } else {
+                    rgblight_mode(RGBLIGHT_MODE_BREATHING);
+                }
+            }
+#    endif
+            return false;
+        case RGB_MODE_RAINBOW:
+#    ifdef RGBLIGHT_EFFECT_RAINBOW_MOOD
+            if (record->event.pressed) {
+                if ((RGBLIGHT_MODE_RAINBOW_MOOD <= rgblight_get_mode()) && (rgblight_get_mode() < RGBLIGHT_MODE_RAINBOW_MOOD_end)) {
+                    rgblight_step();
+                } else {
+                    rgblight_mode(RGBLIGHT_MODE_RAINBOW_MOOD);
+                }
+            }
+#    endif
+            return false;
+        case RGB_MODE_SWIRL:
+#    ifdef RGBLIGHT_EFFECT_RAINBOW_SWIRL
+            if (record->event.pressed) {
+                if ((RGBLIGHT_MODE_RAINBOW_SWIRL <= rgblight_get_mode()) && (rgblight_get_mode() < RGBLIGHT_MODE_RAINBOW_SWIRL_end)) {
+                    rgblight_step();
+                } else {
+                    rgblight_mode(RGBLIGHT_MODE_RAINBOW_SWIRL);
+                }
+            }
+#    endif
+            return false;
+        case RGB_MODE_SNAKE:
+#    ifdef RGBLIGHT_EFFECT_SNAKE
+            if (record->event.pressed) {
+                if ((RGBLIGHT_MODE_SNAKE <= rgblight_get_mode()) && (rgblight_get_mode() < RGBLIGHT_MODE_SNAKE_end)) {
+                    rgblight_step();
+                } else {
+                    rgblight_mode(RGBLIGHT_MODE_SNAKE);
+                }
+            }
+#    endif
+            return false;
+        case RGB_MODE_KNIGHT:
+#    ifdef RGBLIGHT_EFFECT_KNIGHT
+            if (record->event.pressed) {
+                if ((RGBLIGHT_MODE_KNIGHT <= rgblight_get_mode()) && (rgblight_get_mode() < RGBLIGHT_MODE_KNIGHT_end)) {
+                    rgblight_step();
+                } else {
+                    rgblight_mode(RGBLIGHT_MODE_KNIGHT);
+                }
+            }
+#    endif
+            return false;
+        case RGB_MODE_XMAS:
+#    ifdef RGBLIGHT_EFFECT_CHRISTMAS
+            if (record->event.pressed) {
+                rgblight_mode(RGBLIGHT_MODE_CHRISTMAS);
+            }
+#    endif
+            return false;
+        case RGB_MODE_GRADIENT:
+#    ifdef RGBLIGHT_EFFECT_STATIC_GRADIENT
+            if (record->event.pressed) {
+                if ((RGBLIGHT_MODE_STATIC_GRADIENT <= rgblight_get_mode()) && (rgblight_get_mode() < RGBLIGHT_MODE_STATIC_GRADIENT_end)) {
+                    rgblight_step();
+                } else {
+                    rgblight_mode(RGBLIGHT_MODE_STATIC_GRADIENT);
+                }
+            }
+#    endif
+            return false;
+        case RGB_MODE_RGBTEST:
+#    ifdef RGBLIGHT_EFFECT_RGB_TEST
+            if (record->event.pressed) {
+                rgblight_mode(RGBLIGHT_MODE_RGB_TEST);
+            }
+#    endif
+            return false;
+#endif  // defined(RGBLIGHT_ENABLE) || defined(RGB_MATRIX_ENABLE)
+#ifdef VELOCIKEY_ENABLE
+        case VLK_TOG:
+            if (record->event.pressed) {
+                velocikey_toggle();
+            }
+            return false;
+#endif
+#ifdef PROTOCOL_LUFA
+        case OUT_AUTO:
+            if (record->event.pressed) {
+                set_output(OUTPUT_AUTO);
+            }
+            return false;
+        case OUT_USB:
+            if (record->event.pressed) {
+                set_output(OUTPUT_USB);
+            }
+            return false;
+#    ifdef BLUETOOTH_ENABLE
+        case OUT_BT:
+            if (record->event.pressed) {
+                set_output(OUTPUT_BLUETOOTH);
+            }
+            return false;
+#    endif
+#endif
+        case MAGIC_SWAP_CONTROL_CAPSLOCK ... MAGIC_TOGGLE_ALT_GUI:
+        case MAGIC_SWAP_LCTL_LGUI ... MAGIC_EE_HANDS_RIGHT:
+            if (record->event.pressed) {
+                // MAGIC actions (BOOTMAGIC without the boot)
+                if (!eeconfig_is_enabled()) {
+                    eeconfig_init();
+                }
+                /* keymap config */
+                keymap_config.raw = eeconfig_read_keymap();
+                switch (keycode) {
+                    case MAGIC_SWAP_CONTROL_CAPSLOCK:
+                        keymap_config.swap_control_capslock = true;
+                        break;
+                    case MAGIC_CAPSLOCK_TO_CONTROL:
+                        keymap_config.capslock_to_control = true;
+                        break;
+                    case MAGIC_SWAP_LALT_LGUI:
+                        keymap_config.swap_lalt_lgui = true;
+                        break;
+                    case MAGIC_SWAP_RALT_RGUI:
+                        keymap_config.swap_ralt_rgui = true;
+                        break;
+                    case MAGIC_SWAP_LCTL_LGUI:
+                        keymap_config.swap_lctl_lgui = true;
+                        break;
+                    case MAGIC_SWAP_RCTL_RGUI:
+                        keymap_config.swap_rctl_rgui = true;
+                        break;
+                    case MAGIC_NO_GUI:
+                        keymap_config.no_gui = true;
+                        break;
+                    case MAGIC_SWAP_GRAVE_ESC:
+                        keymap_config.swap_grave_esc = true;
+                        break;
+                    case MAGIC_SWAP_BACKSLASH_BACKSPACE:
+                        keymap_config.swap_backslash_backspace = true;
+                        break;
+                    case MAGIC_HOST_NKRO:
+                        keymap_config.nkro = true;
+                        break;
+                    case MAGIC_SWAP_ALT_GUI:
+                        keymap_config.swap_lalt_lgui = keymap_config.swap_ralt_rgui = true;
+#ifdef AUDIO_ENABLE
+                        PLAY_SONG(ag_swap_song);
+#endif
+                        break;
+                    case MAGIC_SWAP_CTL_GUI:
+                        keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+#ifdef AUDIO_ENABLE
+                        PLAY_SONG(cg_swap_song);
+#endif
+                        break;
+                    case MAGIC_UNSWAP_CONTROL_CAPSLOCK:
+                        keymap_config.swap_control_capslock = false;
+                        break;
+                    case MAGIC_UNCAPSLOCK_TO_CONTROL:
+                        keymap_config.capslock_to_control = false;
+                        break;
+                    case MAGIC_UNSWAP_LALT_LGUI:
+                        keymap_config.swap_lalt_lgui = false;
+                        break;
+                    case MAGIC_UNSWAP_RALT_RGUI:
+                        keymap_config.swap_ralt_rgui = false;
+                        break;
+                    case MAGIC_UNSWAP_LCTL_LGUI:
+                        keymap_config.swap_lctl_lgui = false;
+                        break;
+                    case MAGIC_UNSWAP_RCTL_RGUI:
+                        keymap_config.swap_rctl_rgui = false;
+                        break;
+                    case MAGIC_UNNO_GUI:
+                        keymap_config.no_gui = false;
+                        break;
+                    case MAGIC_UNSWAP_GRAVE_ESC:
+                        keymap_config.swap_grave_esc = false;
+                        break;
+                    case MAGIC_UNSWAP_BACKSLASH_BACKSPACE:
+                        keymap_config.swap_backslash_backspace = false;
+                        break;
+                    case MAGIC_UNHOST_NKRO:
+                        keymap_config.nkro = false;
+                        break;
+                    case MAGIC_UNSWAP_ALT_GUI:
+                        keymap_config.swap_lalt_lgui = keymap_config.swap_ralt_rgui = false;
+#ifdef AUDIO_ENABLE
+                        PLAY_SONG(ag_norm_song);
+#endif
+                        break;
+                    case MAGIC_UNSWAP_CTL_GUI:
+                        keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+#ifdef AUDIO_ENABLE
+                        PLAY_SONG(cg_norm_song);
+#endif
+                        break;
+                    case MAGIC_TOGGLE_ALT_GUI:
+                        keymap_config.swap_lalt_lgui = !keymap_config.swap_lalt_lgui;
+                        keymap_config.swap_ralt_rgui = keymap_config.swap_lalt_lgui;
+#ifdef AUDIO_ENABLE
+                        if (keymap_config.swap_ralt_rgui) {
+                            PLAY_SONG(ag_swap_song);
+                        } else {
+                            PLAY_SONG(ag_norm_song);
+                        }
+#endif
+                        break;
+                    case MAGIC_TOGGLE_CTL_GUI:
+                        keymap_config.swap_lctl_lgui = !keymap_config.swap_lctl_lgui;
+                        keymap_config.swap_rctl_rgui = keymap_config.swap_lctl_lgui;
+#ifdef AUDIO_ENABLE
+                        if (keymap_config.swap_rctl_rgui) {
+                            PLAY_SONG(cg_swap_song);
+                        } else {
+                            PLAY_SONG(cg_norm_song);
+                        }
+#endif
+                        break;
+                    case MAGIC_TOGGLE_NKRO:
+                        keymap_config.nkro = !keymap_config.nkro;
+                        break;
+                    case MAGIC_EE_HANDS_LEFT:
+                        eeconfig_update_handedness(true);
+                        break;
+                    case MAGIC_EE_HANDS_RIGHT:
+                        eeconfig_update_handedness(false);
+                        break;
+                    default:
+                        break;
+                }
+                eeconfig_update_keymap(keymap_config.raw);
+                clear_keyboard();  // clear to prevent stuck keys
+
+                return false;
+            }
+            break;
+
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
         case GRAVE_ESC: {
             uint8_t shifted = get_mods() & ((MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT) | MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI)));
 
@@ -1083,10 +1539,17 @@ bool process_record_quantum(keyrecord_t *record) {
         }
 #endif
     }
+<<<<<<< HEAD
 
     return process_action_kb(record);
 }
 
+=======
+
+    return process_action_kb(record);
+}
+
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 __attribute__((weak)) const bool ascii_to_shift_lut[128] PROGMEM = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
                                                                     0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0};
@@ -1227,7 +1690,10 @@ uint32_t update_tri_layer_state(uint32_t state, uint8_t layer1, uint8_t layer2, 
 layer_state_t update_tri_layer_state(layer_state_t state, uint8_t layer1, uint8_t layer2, uint8_t layer3) {
     layer_state_t mask12 = (1UL << layer1) | (1UL << layer2);
     layer_state_t mask3  = 1UL << layer3;
+<<<<<<< HEAD
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     return (state & mask12) == mask12 ? (state | mask3) : (state & ~mask3);
 }
 
@@ -1331,6 +1797,7 @@ void matrix_init_quantum() {
 #ifdef OUTPUT_AUTO_ENABLE
     set_output(OUTPUT_AUTO);
 #endif
+<<<<<<< HEAD
     matrix_init_kb();
 }
 
@@ -1859,6 +2326,55 @@ __attribute__((weak)) void backlight_set(uint8_t level) {}
 
 #endif  // backlight
 
+=======
+#ifdef DIP_SWITCH_ENABLE
+    dip_switch_init();
+#endif
+
+    matrix_init_kb();
+}
+
+void matrix_scan_quantum() {
+#if defined(AUDIO_ENABLE) && !defined(NO_MUSIC_MODE)
+    matrix_scan_music();
+#endif
+
+#ifdef TAP_DANCE_ENABLE
+    matrix_scan_tap_dance();
+#endif
+
+#ifdef COMBO_ENABLE
+    matrix_scan_combo();
+#endif
+
+#if defined(BACKLIGHT_ENABLE)
+#    if defined(LED_MATRIX_ENABLE)
+    led_matrix_task();
+#    elif defined(BACKLIGHT_PIN)
+    backlight_task();
+#    endif
+#endif
+
+#ifdef RGB_MATRIX_ENABLE
+    rgb_matrix_task();
+#endif
+
+#ifdef ENCODER_ENABLE
+    encoder_read();
+#endif
+
+#ifdef HAPTIC_ENABLE
+    haptic_task();
+#endif
+
+#ifdef DIP_SWITCH_ENABLE
+    dip_switch_read(false);
+#endif
+
+    matrix_scan_kb();
+}
+
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #ifdef HD44780_ENABLED
 #    include "hd44780.h"
 #endif

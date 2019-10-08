@@ -33,6 +33,7 @@ RGB hsv_to_rgb(HSV hsv) {
 #endif
         return rgb;
     }
+<<<<<<< HEAD
 
     h = hsv.h;
     s = hsv.s;
@@ -84,6 +85,57 @@ RGB hsv_to_rgb(HSV hsv) {
     rgb.g = pgm_read_byte(&CIE1931_CURVE[rgb.g]);
     rgb.b = pgm_read_byte(&CIE1931_CURVE[rgb.b]);
 #endif
+=======
+
+    h = hsv.h;
+    s = hsv.s;
+#ifdef USE_CIE1931_CURVE
+    v = pgm_read_byte(&CIE1931_CURVE[hsv.v]);
+#else
+    v = hsv.v;
+#endif
+
+    region    = h * 6 / 255;
+    remainder = (h * 2 - region * 85) * 3;
+
+    p = (v * (255 - s)) >> 8;
+    q = (v * (255 - ((s * remainder) >> 8))) >> 8;
+    t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+
+    switch (region) {
+        case 6:
+        case 0:
+            rgb.r = v;
+            rgb.g = t;
+            rgb.b = p;
+            break;
+        case 1:
+            rgb.r = q;
+            rgb.g = v;
+            rgb.b = p;
+            break;
+        case 2:
+            rgb.r = p;
+            rgb.g = v;
+            rgb.b = t;
+            break;
+        case 3:
+            rgb.r = p;
+            rgb.g = q;
+            rgb.b = v;
+            break;
+        case 4:
+            rgb.r = t;
+            rgb.g = p;
+            rgb.b = v;
+            break;
+        default:
+            rgb.r = v;
+            rgb.g = p;
+            rgb.b = q;
+            break;
+    }
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 
     return rgb;
 }

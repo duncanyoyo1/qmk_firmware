@@ -24,6 +24,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define BACKLIGHT_LEVELS 3
 #elif BACKLIGHT_LEVELS > 31
 #    error "Maximum value of BACKLIGHT_LEVELS is 31"
+<<<<<<< HEAD
+=======
+#endif
+
+#ifndef BREATHING_PERIOD
+#    define BREATHING_PERIOD 6
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #endif
 
 typedef union {

@@ -1,6 +1,7 @@
 # MCU name
 MCU = atmega32u4
 
+<<<<<<< HEAD
 # Processor frequency.
 #     This will define a symbol, F_CPU, in all source code files equal to the
 #     processor frequency in Hz. You can then use this symbol in your source code to
@@ -38,12 +39,15 @@ F_USB = $(F_CPU)
 OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 
 
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 # Bootloader selection
 #   Teensy       halfkay
 #   Pro Micro    caterina
 #   Atmel DFU    atmel-dfu
 #   LUFA DFU     lufa-dfu
 #   QMK DFU      qmk-dfu
+<<<<<<< HEAD
 #   atmega32a    bootloadHID
 BOOTLOADER = halfkay
 
@@ -56,3 +60,8 @@ BOOTLOADER = halfkay
 #   LUFA bootloader     4096
 #   USBaspLoader        2048
 # OPT_DEFS += -DBOOTLOADER_SIZE=4096
+=======
+#   ATmega32A    bootloadHID
+#   ATmega328P   USBasp
+BOOTLOADER = halfkay
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd

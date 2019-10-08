@@ -30,6 +30,7 @@
 #        endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #        if SOFT_SERIAL_PIN >= D0 && SOFT_SERIAL_PIN <= D3
 #            define SERIAL_PIN_DDR DDRD
 #            define SERIAL_PIN_PORT PORTD
@@ -37,6 +38,8 @@
 #            if SOFT_SERIAL_PIN == D0
 #                define SERIAL_PIN_MASK _BV(PD0)
 =======
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #        define setPinInputHigh(pin) (DDRx_ADDRESS(pin) &= ~_BV((pin)&0xF), PORTx_ADDRESS(pin) |= _BV((pin)&0xF))
 #        define setPinOutput(pin) (DDRx_ADDRESS(pin) |= _BV((pin)&0xF))
 #        define writePinHigh(pin) (PORTx_ADDRESS(pin) |= _BV((pin)&0xF))
@@ -45,36 +48,49 @@
 
 #        if SOFT_SERIAL_PIN >= D0 && SOFT_SERIAL_PIN <= D3
 #            if SOFT_SERIAL_PIN == D0
+<<<<<<< HEAD
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #                define EIMSK_BIT _BV(INT0)
 #                define EICRx_BIT (~(_BV(ISC00) | _BV(ISC01)))
 #                define SERIAL_PIN_INTERRUPT INT0_vect
 #            elif SOFT_SERIAL_PIN == D1
 <<<<<<< HEAD
+<<<<<<< HEAD
 #                define SERIAL_PIN_MASK _BV(PD1)
 =======
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #                define EIMSK_BIT _BV(INT1)
 #                define EICRx_BIT (~(_BV(ISC10) | _BV(ISC11)))
 #                define SERIAL_PIN_INTERRUPT INT1_vect
 #            elif SOFT_SERIAL_PIN == D2
 <<<<<<< HEAD
+<<<<<<< HEAD
 #                define SERIAL_PIN_MASK _BV(PD2)
 =======
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #                define EIMSK_BIT _BV(INT2)
 #                define EICRx_BIT (~(_BV(ISC20) | _BV(ISC21)))
 #                define SERIAL_PIN_INTERRUPT INT2_vect
 #            elif SOFT_SERIAL_PIN == D3
 <<<<<<< HEAD
+<<<<<<< HEAD
 #                define SERIAL_PIN_MASK _BV(PD3)
 =======
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #                define EIMSK_BIT _BV(INT3)
 #                define EICRx_BIT (~(_BV(ISC30) | _BV(ISC31)))
 #                define SERIAL_PIN_INTERRUPT INT3_vect
 #            endif
 #        elif SOFT_SERIAL_PIN == E6
+<<<<<<< HEAD
 <<<<<<< HEAD
 #            define SERIAL_PIN_DDR DDRE
 #            define SERIAL_PIN_PORT PORTE
@@ -82,6 +98,8 @@
 #            define SERIAL_PIN_MASK _BV(PE6)
 =======
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #            define EIMSK_BIT _BV(INT6)
 #            define EICRx_BIT (~(_BV(ISC60) | _BV(ISC61)))
 #            define SERIAL_PIN_INTERRUPT INT6_vect
@@ -213,6 +231,7 @@ inline static void serial_delay_half2(void) { _delay_us(SERIAL_DELAY_HALF2); }
 
 inline static void serial_output(void) ALWAYS_INLINE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 inline static void serial_output(void) { SERIAL_PIN_DDR |= SERIAL_PIN_MASK; }
 
 // make the serial pin an input with pull-up resistor
@@ -246,6 +265,22 @@ inline static void serial_low(void) { writePinLow(SOFT_SERIAL_PIN); }
 inline static void serial_high(void) ALWAYS_INLINE;
 inline static void serial_high(void) { writePinHigh(SOFT_SERIAL_PIN); }
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+inline static void serial_output(void) { setPinOutput(SOFT_SERIAL_PIN); }
+
+// make the serial pin an input with pull-up resistor
+inline static void serial_input_with_pullup(void) ALWAYS_INLINE;
+inline static void serial_input_with_pullup(void) { setPinInputHigh(SOFT_SERIAL_PIN); }
+
+inline static uint8_t serial_read_pin(void) ALWAYS_INLINE;
+inline static uint8_t serial_read_pin(void) { return !!readPin(SOFT_SERIAL_PIN); }
+
+inline static void serial_low(void) ALWAYS_INLINE;
+inline static void serial_low(void) { writePinLow(SOFT_SERIAL_PIN); }
+
+inline static void serial_high(void) ALWAYS_INLINE;
+inline static void serial_high(void) { writePinHigh(SOFT_SERIAL_PIN); }
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 
 void soft_serial_initiator_init(SSTD_t *sstd_table, int sstd_table_size) {
     Transaction_table      = sstd_table;
@@ -262,10 +297,14 @@ void soft_serial_target_init(SSTD_t *sstd_table, int sstd_table_size) {
     // Enable INT0-INT3,INT6
     EIMSK |= EIMSK_BIT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #    if SERIAL_PIN_MASK == _BV(PE6)
 =======
 #    if SOFT_SERIAL_PIN == E6
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+#    if SOFT_SERIAL_PIN == E6
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     // Trigger on falling edge of INT6
     EICRB &= EICRx_BIT;
 #    else
@@ -484,6 +523,9 @@ int soft_serial_transaction(int sstd_index) {
     serial_write_chunk(tid, 7);
     serial_delay_half1();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 
     // wait for the target response (step1 low->high)
     serial_input_with_pullup();
@@ -524,6 +566,7 @@ int soft_serial_transaction(int sstd_index) {
     if (trans->initiator2target_buffer_size > 0) {
         serial_send_packet((uint8_t *)trans->initiator2target_buffer, trans->initiator2target_buffer_size);
     }
+<<<<<<< HEAD
 
 =======
 
@@ -568,6 +611,9 @@ int soft_serial_transaction(int sstd_index) {
     }
 
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     // always, release the line when not in use
     sync_send();
 

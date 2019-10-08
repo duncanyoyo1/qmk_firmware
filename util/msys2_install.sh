@@ -8,7 +8,11 @@ installflip=false
 util_dir=$(dirname "$0")
 
 echo "Installing dependencies needed for the installation (quazip)"
+<<<<<<< HEAD
 pacman --needed -S base-devel mingw-w64-x86_64-toolchain msys/clang msys/git msys/p7zip msys/python3 msys/unzip
+=======
+pacman --needed -S base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-clang msys/git msys/p7zip msys/python3 msys/unzip
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 
 source "$dir/win_shared_install.sh"
 

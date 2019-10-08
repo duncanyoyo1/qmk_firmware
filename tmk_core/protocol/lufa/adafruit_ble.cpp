@@ -10,6 +10,7 @@
 #include "action_util.h"
 #include "ringbuffer.hpp"
 #include <string.h>
+#include "analog.h"
 
 // These are the pin assignments for the 32u4 boards.
 // You may define them to something else in your config.h
@@ -28,6 +29,12 @@
 
 #define SAMPLE_BATTERY
 #define ConnectionUpdateInterval 1000 /* milliseconds */
+
+#ifdef SAMPLE_BATTERY
+#ifndef BATTERY_LEVEL_PIN
+#    define BATTERY_LEVEL_PIN 7
+#endif
+#endif
 
 static struct {
     bool is_connected;
@@ -144,9 +151,16 @@ static struct SPI_Settings spi;
 // Initialize 4Mhz MSBFIRST MODE0
 void SPI_init(struct SPI_Settings *spi) {
     spi->spcr = _BV(SPE) | _BV(MSTR);
+<<<<<<< HEAD
     spi->spsr = _BV(SPI2X);
 
     static_assert(SpiBusSpeed == F_CPU / 2, "hard coded at 4Mhz");
+=======
+#if F_CPU == 8000000
+    // For MCUs running at 8MHz (such as Feather 32U4, or 3.3V Pro Micros) we set the SPI doublespeed bit
+    spi->spsr = _BV(SPI2X);
+#endif
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         // Ensure that SS is OUTPUT High
@@ -224,6 +238,7 @@ static bool sdep_send_pkt(const struct sdep_msg *msg, uint16_t timeout) {
     uint16_t timerStart = timer_read();
     bool     success    = false;
     bool     ready      = false;
+<<<<<<< HEAD
 
     do {
         ready = SPI_TransferByte(msg->type) != SdepSlaveNotReady;
@@ -231,6 +246,15 @@ static bool sdep_send_pkt(const struct sdep_msg *msg, uint16_t timeout) {
             break;
         }
 
+=======
+
+    do {
+        ready = SPI_TransferByte(msg->type) != SdepSlaveNotReady;
+        if (ready) {
+            break;
+        }
+
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
         // Release it and let it initialize
         digitalWrite(AdafruitBleCSPin, PinLevelHigh);
         _delay_us(SdepBackOff);
@@ -631,6 +655,7 @@ void adafruit_ble_task(void) {
     }
 
 #ifdef SAMPLE_BATTERY
+<<<<<<< HEAD
     // I don't know if this really does anything useful yet; the reported
     // voltage level always seems to be around 3200mV.  We may want to just rip
     // this code out.
@@ -640,6 +665,12 @@ void adafruit_ble_task(void) {
         if (at_command_P(PSTR("AT+HWVBAT"), resbuf, sizeof(resbuf))) {
             state.vbat = atoi(resbuf);
         }
+=======
+    if (timer_elapsed(state.last_battery_update) > BatteryUpdateInterval && resp_buf.empty()) {
+        state.last_battery_update = timer_read();
+
+        state.vbat = analogRead(BATTERY_LEVEL_PIN);
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     }
 #endif
 }

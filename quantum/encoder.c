@@ -40,8 +40,10 @@ static int8_t encoder_LUT[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 
 static uint8_t encoder_state[NUMBER_OF_ENCODERS] = {0};
 
 #ifdef SPLIT_KEYBOARD
-// slave half encoders come over as second set of encoders
+// right half encoders come over as second set of encoders
 static int8_t encoder_value[NUMBER_OF_ENCODERS * 2] = {0};
+// row offsets for each hand
+static uint8_t thisHand, thatHand;
 #else
 static int8_t encoder_value[NUMBER_OF_ENCODERS] = {0};
 #endif
@@ -64,6 +66,7 @@ void encoder_init(void) {
     }
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
     for (int i = 0; i < NUMBER_OF_ENCODERS; i++) {
         setPinInputHigh(encoders_pad_a[i]);
@@ -90,9 +93,50 @@ void encoder_read(void) {
 
 #ifdef SPLIT_KEYBOARD
 void encoder_state_raw(uint8_t* slave_state) { memcpy(slave_state, encoder_state, sizeof(encoder_state)); }
+=======
+    for (int i = 0; i < NUMBER_OF_ENCODERS; i++) {
+        setPinInputHigh(encoders_pad_a[i]);
+        setPinInputHigh(encoders_pad_b[i]);
+
+        encoder_state[i] = (readPin(encoders_pad_a[i]) << 0) | (readPin(encoders_pad_b[i]) << 1);
+    }
+
+#ifdef SPLIT_KEYBOARD
+    thisHand = isLeftHand ? 0 : NUMBER_OF_ENCODERS;
+    thatHand = NUMBER_OF_ENCODERS - thisHand;
+#endif
+}
+
+static void encoder_update(int8_t index, uint8_t state) {
+    encoder_value[index] += encoder_LUT[state & 0xF];
+    if (encoder_value[index] >= ENCODER_RESOLUTION) {
+        encoder_update_kb(index, false);
+    }
+    if (encoder_value[index] <= -ENCODER_RESOLUTION) { // direction is arbitrary here, but this clockwise
+        encoder_update_kb(index, true);
+    }
+    encoder_value[index] %= ENCODER_RESOLUTION;
+}
+
+void encoder_read(void) {
+    for (int i = 0; i < NUMBER_OF_ENCODERS; i++) {
+        encoder_state[i] <<= 2;
+        encoder_state[i] |= (readPin(encoders_pad_a[i]) << 0) | (readPin(encoders_pad_b[i]) << 1);
+#if SPLIT_KEYBOARD
+        encoder_update(i + thisHand, encoder_state[i]);
+#else
+        encoder_update(i, encoder_state[i]);
+#endif
+    }
+}
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
+
+#ifdef SPLIT_KEYBOARD
+void encoder_state_raw(uint8_t* slave_state) { memcpy(slave_state, encoder_state, sizeof(encoder_state)); }
 
 void encoder_update_raw(uint8_t* slave_state) {
     for (int i = 0; i < NUMBER_OF_ENCODERS; i++) {
+<<<<<<< HEAD
         encoder_value[NUMBER_OF_ENCODERS + i] += encoder_LUT[slave_state[i] & 0xF];
         if (encoder_value[NUMBER_OF_ENCODERS + i] >= ENCODER_RESOLUTION) {
             encoder_update_kb(NUMBER_OF_ENCODERS + i, false);
@@ -101,6 +145,9 @@ void encoder_update_raw(uint8_t* slave_state) {
             encoder_update_kb(NUMBER_OF_ENCODERS + i, true);
         }
         encoder_value[NUMBER_OF_ENCODERS + i] %= ENCODER_RESOLUTION;
+=======
+        encoder_update(i + thatHand, slave_state[i]);
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     }
 }
 #endif
