@@ -8,6 +8,7 @@
         "**/*.hex": true
     },
     "files.associations": {
+<<<<<<< HEAD
         "*.h": "c",
         "*.c": "c",
         "*.cpp": "cpp",
@@ -17,4 +18,14 @@
     "editor.fontSize": 12,
     "editor.fontFamily": "'SF Mono', 'Source Code Pro', 'Input Mono' ",
     "C_Cpp.default.intelliSenseMode": "gcc-x64"
+=======
+      "*.h": "c",
+      "*.c": "c",
+      "*.cpp": "cpp",
+      "*.hpp": "cpp",
+      "xstddef": "c",
+      "type_traits": "c",
+      "utility": "c"
+    }
+>>>>>>> 64c075ed2c2e2ddb2da9321bf17ed911d758a9b2
 }
