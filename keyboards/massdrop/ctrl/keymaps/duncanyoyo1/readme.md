@@ -1,4 +1,4 @@
-![MassDrop CTRL Layout Image](https://raw.githubusercontent.com/duncanyoyo1/qmk_firmware/duncanyoyo1/keyboards/massdrop/ctrl/keymaps/duncanyoyo1/keyboard-layout.png)
+![MassDrop CTRL Layout Image](https://github.com/duncanyoyo1/qmk_firmware/raw/master/keyboards/massdrop/ctrl/keymaps/duncanyoyo1/keyboard-layout.png)
 
 # Duncanyoyo1's layout for the MassDrop CTRL
 
@@ -11,7 +11,7 @@ The Massdrop CTRL is a TKL mechanical keyboard featuring dual USB-C connectors, 
 
 Keyboard Maintainer: [Massdrop](https://github.com/massdrop)  
 Hardware Supported: Massdrop, Inc. CTRL PCBs utilizing Microchip's ATSAMD51J18A MCU and USB2422 2-Port USB 2.0 Hi-Speed Hub Controller, and ISSI's IS31FL3733 LED Drivers.  
-Hardware Availability: [Massdrop CTRL Mechanical Keyboard](https://www.massdrop.com/buy/massdrop-ctrl-mechanical-keyboard)
+Hardware Availability: [Massdrop CTRL High Profile Mechanical Keyboard](https://drop.com/buy/massdrop-ctrl-high-profile-mechanical-keyboard)
 
 Make example for this keymap (after setting up your build environment):
 

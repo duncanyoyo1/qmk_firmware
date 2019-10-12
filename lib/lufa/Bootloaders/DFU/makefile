@@ -1,6 +1,6 @@
 #
 #             LUFA Library
-#     Copyright (C) Dean Camera, 2017.
+#     Copyright (C) Dean Camera, 2019.
 #
 #  dean [at] fourwalledcubicle [dot] com
 #           www.lufa-lib.org
@@ -13,7 +13,7 @@
 
 MCU          ?= atmega32u4
 ARCH         ?= AVR8
-BOARD        ?= QMK
+BOARD        = QMK
 F_CPU        ?= 16000000
 F_USB        ?= $(F_CPU)
 OPTIMIZATION = s
