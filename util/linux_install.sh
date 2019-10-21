@@ -80,6 +80,7 @@ elif grep ID /etc/os-release | grep -q 'arch\|manjaro'; then
 		gcc \
 		git \
 		python \
+		python-pip \
 		unzip \
 		wget \
 		zip
@@ -216,4 +217,4 @@ else
 fi
 
 # Global install tasks
-pip3 install -r ${util_dir}/../requirements.txt
+pip3 install --user -r ${util_dir}/../requirements.txt
