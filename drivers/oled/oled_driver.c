@@ -439,6 +439,15 @@ void oled_write_ln(const char *data, bool invert) {
     oled_advance_page(true);
 }
 
+void oled_write_raw(const char *data, uint16_t size) {
+    if (size > OLED_MATRIX_SIZE) size = OLED_MATRIX_SIZE;
+    for (uint16_t i = 0; i < size; i++) {
+        if (oled_buffer[i] == data[i]) continue;
+        oled_buffer[i] = data[i];
+        oled_dirty |= (1 << (i / OLED_BLOCK_SIZE));
+    }
+}
+
 #if defined(__AVR__)
 void oled_write_P(const char *data, bool invert) {
     uint8_t c = pgm_read_byte(data);
@@ -451,6 +460,16 @@ void oled_write_P(const char *data, bool invert) {
 void oled_write_ln_P(const char *data, bool invert) {
     oled_write_P(data, invert);
     oled_advance_page(true);
+}
+
+void oled_write_raw_P(const char *data, uint16_t size) {
+    if (size > OLED_MATRIX_SIZE) size = OLED_MATRIX_SIZE;
+    for (uint16_t i = 0; i < size; i++) {
+        uint8_t c = pgm_read_byte(++data);
+        if (oled_buffer[i] == c) continue;
+        oled_buffer[i] = c;
+        oled_dirty |= (1 << (i / OLED_BLOCK_SIZE));
+    }
 }
 #endif  // defined(__AVR__)
 
@@ -592,5 +611,9 @@ void oled_task(void) {
 #endif
 }
 
+<<<<<<< HEAD
 >>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 __attribute__((weak)) void oled_task_user(void) {}
+=======
+__attribute__((weak)) void oled_task_user(void) {}
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719

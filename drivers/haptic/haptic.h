@@ -35,11 +35,15 @@ typedef union {
     uint32_t raw;
     struct {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
         bool     enable : 1;
         uint8_t  feedback : 2;
         uint8_t  mode : 7;
         bool     buzz : 1;
         uint8_t  dwell : 7;
+<<<<<<< HEAD
         uint16_t reserved : 16;
 =======
         bool     enable    :1;
@@ -51,6 +55,11 @@ typedef union {
         uint8_t  amplitude :8;
         uint16_t reserved  :7; 
 >>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
+=======
+        bool     cont : 1;
+        uint8_t  amplitude : 8;
+        uint16_t reserved : 7;
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
     };
 } haptic_config_t;
 

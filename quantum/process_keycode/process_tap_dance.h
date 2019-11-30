@@ -67,6 +67,7 @@ typedef struct {
 
 #    define ACTION_TAP_DANCE_DUAL_ROLE(kc, layer) \
 <<<<<<< HEAD
+<<<<<<< HEAD
         { .fn = {qk_tap_dance_dual_role_on_each_tap, qk_tap_dance_dual_role_finished, qk_tap_dance_dual_role_reset}, .user_data = (void *)&((qk_tap_dance_dual_role_t){kc, layer}), }
 
 #    define ACTION_TAP_DANCE_FN(user_fn) \
@@ -79,9 +80,12 @@ typedef struct {
         { .fn = {user_fn_on_each_tap, user_fn_on_dance_finished, user_fn_on_dance_reset}, .user_data = NULL, .custom_tapping_term = tap_specific_tapping_term, }
 =======
         { .fn = { qk_tap_dance_dual_role_on_each_tap, qk_tap_dance_dual_role_finished, qk_tap_dance_dual_role_reset }, .user_data = (void *)&((qk_tap_dance_dual_role_t) { kc, layer, layer_move }),  }
+=======
+        { .fn = {qk_tap_dance_dual_role_on_each_tap, qk_tap_dance_dual_role_finished, qk_tap_dance_dual_role_reset}, .user_data = (void *)&((qk_tap_dance_dual_role_t){kc, layer, layer_move}), }
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
 
-#    define ACTION_TAP_DANCE_TOGGLE_LAYER(kc, layer) \
-        { .fn = { NULL, qk_tap_dance_dual_role_finished, qk_tap_dance_dual_role_reset }, .user_data = (void *)&((qk_tap_dance_dual_role_t) { kc, layer, layer_invert }), }
+#    define ACTION_TAP_DANCE_LAYER_TOGGLE(kc, layer) \
+        { .fn = {NULL, qk_tap_dance_dual_role_finished, qk_tap_dance_dual_role_reset}, .user_data = (void *)&((qk_tap_dance_dual_role_t){kc, layer, layer_invert}), }
 
 #    define ACTION_TAP_DANCE_LAYER_MOVE(kc, layer) ACTION_TAP_DANCE_DUAL_ROLE(kc, layer)
 
@@ -94,9 +98,12 @@ typedef struct {
 #    define ACTION_TAP_DANCE_FN_ADVANCED_TIME(user_fn_on_each_tap, user_fn_on_dance_finished, user_fn_on_dance_reset, tap_specific_tapping_term) \
         { .fn = {user_fn_on_each_tap, user_fn_on_dance_finished, user_fn_on_dance_reset}, .user_data = NULL, .custom_tapping_term = tap_specific_tapping_term, }
 
+<<<<<<< HEAD
 
 >>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 
+=======
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
 extern qk_tap_dance_action_t tap_dance_actions[];
 
 /* To be used internally */

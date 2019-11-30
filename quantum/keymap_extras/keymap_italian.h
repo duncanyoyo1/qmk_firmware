@@ -79,7 +79,11 @@
 
 // shifted characters
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IT_PIPE LSFT(IT_BKSL)  // °
+=======
+#define IT_DEGR LSFT(IT_AACC)  // °
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
 #define IT_EXLM LSFT(KC_1)     // !
 #define IT_DQOT LSFT(KC_2)     // "
 #define IT_STRL LSFT(KC_3)     // £
@@ -97,6 +101,7 @@
 #define IT_COLN LSFT(IT_DOT)   // :
 #define IT_SCLN LSFT(IT_COMM)  // ;
 #define IT_UNDS LSFT(IT_MINS)  // _
+<<<<<<< HEAD
 
 // Alt Gr-ed characters
 #define IT_LCBR ALGR(KC_7)     // {
@@ -128,19 +133,25 @@
 #define IT_COLN LSFT(IT_DOT) // :
 #define IT_SCLN LSFT(IT_COMM) // ;
 #define IT_UNDS LSFT(IT_MINS) // _
+=======
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
 
 // Alt Gr-ed characters
-#define IT_LCBR ALGR(KC_7) // {
-#define IT_LBRC ALGR(IT_EACC) // [
-#define IT_RBRC ALGR(IT_PLUS) // ]
-#define IT_RCBR ALGR(KC_0) // }
-#define IT_AT   ALGR(IT_OACC) 	// @
-#define IT_EURO ALGR(KC_E) 		// €
-#define IT_PIPE LSFT(IT_BSLS) 	// |
-#define	IT_SHRP	ALGR(IT_AACC) 	// #
+#define IT_LCBR ALGR(KC_7)     // {
+#define IT_LBRC ALGR(IT_EACC)  // [
+#define IT_RBRC ALGR(IT_PLUS)  // ]
+#define IT_RCBR ALGR(KC_0)     // }
+#define IT_AT ALGR(IT_OACC)    // @
+#define IT_EURO ALGR(KC_E)     // €
+#define IT_PIPE LSFT(IT_BSLS)  // |
+#define IT_SHRP ALGR(IT_AACC)  // #
 
 // Deprecated
+<<<<<<< HEAD
 #define	IT_X_PLUS	X_RBRACKET 	// #
 >>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
+=======
+#define IT_X_PLUS X_RBRACKET  // #
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
 
 #endif
