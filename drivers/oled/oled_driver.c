@@ -113,11 +113,16 @@ bool            oled_active         = false;
 bool            oled_scrolling      = false;
 uint8_t         oled_rotation       = 0;
 uint8_t         oled_rotation_width = 0;
+<<<<<<< HEAD
+#if !defined(OLED_DISABLE_TIMEOUT)
+uint16_t oled_last_activity;
+=======
 #if OLED_TIMEOUT > 0
 uint32_t oled_timeout;
 #endif
 #if OLED_SCROLL_TIMEOUT > 0
 uint32_t oled_scroll_timeout;
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #endif
 
 // Internal variables to reduce math instructions
@@ -200,6 +205,8 @@ bool oled_init(uint8_t rotation) {
         return false;
     }
 
+<<<<<<< HEAD
+=======
 #if OLED_TIMEOUT > 0
     oled_timeout = timer_read32() + OLED_TIMEOUT;
 #endif
@@ -207,6 +214,7 @@ bool oled_init(uint8_t rotation) {
     oled_scroll_timeout = timer_read32() + OLED_SCROLL_TIMEOUT;
 #endif
 
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     oled_clear();
     oled_initialized = true;
     oled_active      = true;
@@ -431,6 +439,15 @@ void oled_write_ln(const char *data, bool invert) {
     oled_advance_page(true);
 }
 
+void oled_write_raw(const char *data, uint16_t size) {
+    if (size > OLED_MATRIX_SIZE) size = OLED_MATRIX_SIZE;
+    for (uint16_t i = 0; i < size; i++) {
+        if (oled_buffer[i] == data[i]) continue;
+        oled_buffer[i] = data[i];
+        oled_dirty |= (1 << (i / OLED_BLOCK_SIZE));
+    }
+}
+
 #if defined(__AVR__)
 void oled_write_P(const char *data, bool invert) {
     uint8_t c = pgm_read_byte(data);
@@ -444,11 +461,26 @@ void oled_write_ln_P(const char *data, bool invert) {
     oled_write_P(data, invert);
     oled_advance_page(true);
 }
+
+void oled_write_raw_P(const char *data, uint16_t size) {
+    if (size > OLED_MATRIX_SIZE) size = OLED_MATRIX_SIZE;
+    for (uint16_t i = 0; i < size; i++) {
+        uint8_t c = pgm_read_byte(++data);
+        if (oled_buffer[i] == c) continue;
+        oled_buffer[i] = c;
+        oled_dirty |= (1 << (i / OLED_BLOCK_SIZE));
+    }
+}
 #endif  // defined(__AVR__)
 
 bool oled_on(void) {
+<<<<<<< HEAD
+#if !defined(OLED_DISABLE_TIMEOUT)
+    oled_last_activity = timer_read();
+=======
 #if OLED_TIMEOUT > 0
     oled_timeout = timer_read32() + OLED_TIMEOUT;
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #endif
 
     static const uint8_t PROGMEM display_on[] = {I2C_CMD, DISPLAY_ON};
@@ -510,7 +542,10 @@ bool oled_scroll_off(void) {
             return oled_scrolling;
         }
         oled_scrolling = false;
+<<<<<<< HEAD
+=======
         oled_dirty     = -1;
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     }
     return !oled_scrolling;
 }
@@ -538,6 +573,8 @@ void oled_task(void) {
 
     oled_task_user();
 
+<<<<<<< HEAD
+=======
 #if OLED_SCROLL_TIMEOUT > 0
     if (oled_dirty && oled_scrolling) {
         oled_scroll_timeout = timer_read32() + OLED_SCROLL_TIMEOUT;
@@ -545,16 +582,24 @@ void oled_task(void) {
     }
 #endif
 
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     // Smart render system, no need to check for dirty
     oled_render();
 
     // Display timeout check
+<<<<<<< HEAD
+#if !defined(OLED_DISABLE_TIMEOUT)
+    if (oled_active && timer_elapsed(oled_last_activity) > OLED_TIMEOUT) {
+=======
 #if OLED_TIMEOUT > 0
     if (oled_active && timer_expired32(timer_read32(), oled_timeout)) {
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
         oled_off();
     }
 #endif
 
+<<<<<<< HEAD
+=======
 #if OLED_SCROLL_TIMEOUT > 0
     if (!oled_scrolling && timer_expired32(timer_read32(), oled_scroll_timeout)) {
 #    ifdef OLED_SCROLL_TIMEOUT_RIGHT
@@ -566,4 +611,9 @@ void oled_task(void) {
 #endif
 }
 
+<<<<<<< HEAD
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 __attribute__((weak)) void oled_task_user(void) {}
+=======
+__attribute__((weak)) void oled_task_user(void) {}
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719

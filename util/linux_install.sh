@@ -71,7 +71,10 @@ elif grep ID /etc/os-release | grep -q 'arch\|manjaro'; then
 		avr-gcc \
 		base-devel \
 		clang \
+<<<<<<< HEAD
+=======
 		dfu-programmer \
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 		dfu-util \
 		diffutils \
 		gcc \

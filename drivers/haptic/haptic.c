@@ -166,15 +166,27 @@ void haptic_set_mode(uint8_t mode) {
     haptic_config.mode = mode;
     eeconfig_update_haptic(haptic_config.raw);
     xprintf("haptic_config.mode = %u\n", haptic_config.mode);
+<<<<<<< HEAD
+=======
 }
 
 void haptic_set_amplitude(uint8_t amp) {
+<<<<<<< HEAD
   haptic_config.amplitude = amp;
   eeconfig_update_haptic(haptic_config.raw);
   xprintf("haptic_config.amplitude = %u\n", haptic_config.amplitude);
   #ifdef DRV2605L
   DRV_amplitude(amp);
   #endif
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
+=======
+    haptic_config.amplitude = amp;
+    eeconfig_update_haptic(haptic_config.raw);
+    xprintf("haptic_config.amplitude = %u\n", haptic_config.amplitude);
+#ifdef DRV2605L
+    DRV_amplitude(amp);
+#endif
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
 }
 
 void haptic_set_buzz(uint8_t buzz) {
@@ -210,52 +222,71 @@ uint8_t haptic_get_dwell(void) {
     return haptic_config.dwell;
 }
 
+<<<<<<< HEAD
+void haptic_play(void) {
+#ifdef DRV2605L
+    uint8_t play_eff = 0;
+    play_eff         = haptic_config.mode;
+    DRV_pulse(play_eff);
+#endif
+#ifdef SOLENOID_ENABLE
+    solenoid_fire();
+#endif
+=======
 void haptic_enable_continuous(void) {
-  haptic_config.cont        = 1;
-  xprintf("haptic_config.cont = %u\n", haptic_config.cont);
-  eeconfig_update_haptic(haptic_config.raw);
-  #ifdef DRV2605L
-  DRV_rtp_init();
-  #endif
+    haptic_config.cont = 1;
+    xprintf("haptic_config.cont = %u\n", haptic_config.cont);
+    eeconfig_update_haptic(haptic_config.raw);
+#ifdef DRV2605L
+    DRV_rtp_init();
+#endif
 }
 
 void haptic_disable_continuous(void) {
+<<<<<<< HEAD
   haptic_config.cont        = 0;
   xprintf("haptic_config.cont = %u\n", haptic_config.cont);
   eeconfig_update_haptic(haptic_config.raw);
   #ifdef DRV2605L
   DRV_write(DRV_MODE,0x00); 
   #endif
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
+=======
+    haptic_config.cont = 0;
+    xprintf("haptic_config.cont = %u\n", haptic_config.cont);
+    eeconfig_update_haptic(haptic_config.raw);
+#ifdef DRV2605L
+    DRV_write(DRV_MODE, 0x00);
+#endif
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
 }
 
 void haptic_toggle_continuous(void) {
 #ifdef DRV2605L
-if (haptic_config.cont) {
-  haptic_disable_continuous();
-  } else {
-    haptic_enable_continuous();
-  }
-  eeconfig_update_haptic(haptic_config.raw);
+    if (haptic_config.cont) {
+        haptic_disable_continuous();
+    } else {
+        haptic_enable_continuous();
+    }
+    eeconfig_update_haptic(haptic_config.raw);
 #endif
 }
 
-
 void haptic_cont_increase(void) {
-  uint8_t amp = haptic_config.amplitude + 10;
-  if (haptic_config.amplitude >= 120) {
-    amp = 120;
-  }
-  haptic_set_amplitude(amp);
+    uint8_t amp = haptic_config.amplitude + 10;
+    if (haptic_config.amplitude >= 120) {
+        amp = 120;
+    }
+    haptic_set_amplitude(amp);
 }
 
 void haptic_cont_decrease(void) {
-  uint8_t amp = haptic_config.amplitude - 10;
-  if (haptic_config.amplitude < 20) {
-    amp = 20;
-  }
-  haptic_set_amplitude(amp);
+    uint8_t amp = haptic_config.amplitude - 10;
+    if (haptic_config.amplitude < 20) {
+        amp = 20;
+    }
+    haptic_set_amplitude(amp);
 }
-
 
 void haptic_play(void) {
 #ifdef DRV2605L
@@ -269,7 +300,13 @@ void haptic_play(void) {
 }
 
 bool process_haptic(uint16_t keycode, keyrecord_t *record) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
+=======
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
     if (keycode == HPT_ON && record->event.pressed) {
         haptic_enable();
     }
@@ -300,16 +337,28 @@ bool process_haptic(uint16_t keycode, keyrecord_t *record) {
     if (keycode == HPT_DWLD && record->event.pressed) {
         haptic_dwell_decrease();
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     if (keycode == HPT_CONT && record->event.pressed) { 
         haptic_toggle_continuous(); 
+=======
+    if (keycode == HPT_CONT && record->event.pressed) {
+        haptic_toggle_continuous();
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
     }
-    if (keycode == HPT_CONI && record->event.pressed) { 
-        haptic_cont_increase(); 
+    if (keycode == HPT_CONI && record->event.pressed) {
+        haptic_cont_increase();
     }
-    if (keycode == HPT_COND && record->event.pressed) { 
-        haptic_cont_decrease(); 
+    if (keycode == HPT_COND && record->event.pressed) {
+        haptic_cont_decrease();
     }
+<<<<<<< HEAD
       
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
+=======
+
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
     if (haptic_config.enable) {
         if (record->event.pressed) {
             // keypress

@@ -69,11 +69,22 @@ void draw_emulator(void);
 struct keyframe_animation_t;
 
 typedef struct {
+<<<<<<< HEAD
+    uint32_t layer;
+    uint32_t default_layer;
+    uint32_t leds;  // See led.h for available statuses
+    uint8_t  mods;
+    bool     suspended;
+=======
     layer_state_t layer;
     layer_state_t default_layer;
     uint32_t      leds;  // See led.h for available statuses
     uint8_t       mods;
     bool          suspended;
+<<<<<<< HEAD
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #ifdef BACKLIGHT_ENABLE
     uint8_t backlight_level;
 #endif

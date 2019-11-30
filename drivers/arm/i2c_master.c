@@ -60,6 +60,11 @@ __attribute__((weak)) void i2c_init(void) {
     // Try releasing special pins for a short time
     palSetPadMode(I2C1_SCL_BANK, I2C1_SCL, PAL_MODE_INPUT);
     palSetPadMode(I2C1_SDA_BANK, I2C1_SDA, PAL_MODE_INPUT);
+<<<<<<< HEAD
+
+    chThdSleepMilliseconds(10);
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 
     chThdSleepMilliseconds(10);
 #ifdef USE_I2CV1
@@ -69,6 +74,11 @@ __attribute__((weak)) void i2c_init(void) {
     palSetPadMode(I2C1_SCL_BANK, I2C1_SCL, PAL_MODE_ALTERNATE(I2C1_SCL_PAL_MODE) | PAL_STM32_OTYPE_OPENDRAIN);
     palSetPadMode(I2C1_SDA_BANK, I2C1_SDA, PAL_MODE_ALTERNATE(I2C1_SDA_PAL_MODE) | PAL_STM32_OTYPE_OPENDRAIN);
 #endif
+<<<<<<< HEAD
+
+    // i2cInit(); //This is invoked by halInit() so no need to redo it.
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 }
 
 i2c_status_t i2c_start(uint8_t address) {

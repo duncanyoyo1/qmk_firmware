@@ -71,7 +71,11 @@ void qk_tap_dance_dual_role_finished(qk_tap_dance_state_t *state, void *user_dat
     if (state->count == 1) {
         register_code16(pair->kc);
     } else if (state->count == 2) {
+<<<<<<< HEAD
+        layer_move(pair->layer);
+=======
         pair->layer_function(pair->layer);
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     }
 }
 

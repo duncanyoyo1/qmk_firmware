@@ -27,10 +27,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define STR(s) XSTR(s)
 #define XSTR(s) #s
 
+<<<<<<< HEAD
+=======
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 uint8_t bitpop(uint8_t bits);
 uint8_t bitpop16(uint16_t bits);
 uint8_t bitpop32(uint32_t bits);

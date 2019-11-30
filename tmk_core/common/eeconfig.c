@@ -2,13 +2,13 @@
 #include <stdbool.h>
 #include "eeprom.h"
 #include "eeconfig.h"
+#include "action_layer.h"
 
 #ifdef STM32_EEPROM_ENABLE
 #    include "hal.h"
 #    include "eeprom_stm32.h"
 #endif
 
-extern uint32_t default_layer_state;
 /** \brief eeconfig enable
  *
  * FIXME: needs doc
@@ -36,8 +36,17 @@ void eeconfig_init_quantum(void) {
     eeprom_update_byte(EECONFIG_DEBUG, 0);
     eeprom_update_byte(EECONFIG_DEFAULT_LAYER, 0);
     default_layer_state = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+    eeprom_update_byte(EECONFIG_KEYMAP, 0);
+=======
     eeprom_update_byte(EECONFIG_KEYMAP_LOWER_BYTE, 0);
     eeprom_update_byte(EECONFIG_KEYMAP_UPPER_BYTE, 0);
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+    eeprom_update_byte(EECONFIG_KEYMAP_LOWER_BYTE, 0);
+    eeprom_update_byte(EECONFIG_KEYMAP_UPPER_BYTE, 0);
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     eeprom_update_byte(EECONFIG_MOUSEKEY_ACCEL, 0);
     eeprom_update_byte(EECONFIG_BACKLIGHT, 0);
     eeprom_update_byte(EECONFIG_AUDIO, 0xFF);  // On by default
@@ -48,16 +57,19 @@ void eeconfig_init_quantum(void) {
     eeprom_update_dword(EECONFIG_RGB_MATRIX, 0);
     eeprom_update_byte(EECONFIG_RGB_MATRIX_SPEED, 0);
 
+<<<<<<< HEAD
+=======
     // TODO: Remove once ARM has a way to configure EECONFIG_HANDEDNESS
     //        within the emulated eeprom via dfu-util or another tool
 #if defined INIT_EE_HANDS_LEFT
-    #pragma message "Faking EE_HANDS for left hand"
+#    pragma message "Faking EE_HANDS for left hand"
     eeprom_update_byte(EECONFIG_HANDEDNESS, 1);
 #elif defined INIT_EE_HANDS_RIGHT
-    #pragma message "Faking EE_HANDS for right hand"
+#    pragma message "Faking EE_HANDS for right hand"
     eeprom_update_byte(EECONFIG_HANDEDNESS, 0);
 #endif
 
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     eeconfig_init_kb();
 }
 
@@ -122,7 +134,15 @@ void eeconfig_update_default_layer(uint8_t val) { eeprom_update_byte(EECONFIG_DE
  *
  * FIXME: needs doc
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+uint8_t eeconfig_read_keymap(void) { return eeprom_read_byte(EECONFIG_KEYMAP); }
+=======
 uint16_t eeconfig_read_keymap(void) { return (eeprom_read_byte(EECONFIG_KEYMAP_LOWER_BYTE) | (eeprom_read_byte(EECONFIG_KEYMAP_UPPER_BYTE) << 8)); }
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+uint16_t eeconfig_read_keymap(void) { return (eeprom_read_byte(EECONFIG_KEYMAP_LOWER_BYTE) | (eeprom_read_byte(EECONFIG_KEYMAP_UPPER_BYTE) << 8)); }
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 /** \brief eeconfig update keymap
  *
  * FIXME: needs doc
@@ -176,12 +196,17 @@ uint32_t eeconfig_read_user(void) { return eeprom_read_dword(EECONFIG_USER); }
  */
 void eeconfig_update_user(uint32_t val) { eeprom_update_dword(EECONFIG_USER, val); }
 
+<<<<<<< HEAD
+uint32_t eeconfig_read_haptic(void) { return eeprom_read_dword(EECONFIG_HAPTIC); }
+/** \brief eeconfig update user
+=======
 /** \brief eeconfig read haptic
  *
  * FIXME: needs doc
  */
 uint32_t eeconfig_read_haptic(void) { return eeprom_read_dword(EECONFIG_HAPTIC); }
 /** \brief eeconfig update haptic
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
  *
  * FIXME: needs doc
  */

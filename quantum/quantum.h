@@ -146,14 +146,33 @@ extern layer_state_t layer_state;
 #endif
 
 #ifdef DIP_SWITCH_ENABLE
-    #include "dip_switch.h"
+#    include "dip_switch.h"
 #endif
 
+#ifdef DYNAMIC_MACRO_ENABLE
+#    include "process_dynamic_macro.h"
+#endif
 
 // Function substitutions to ease GPIO manipulation
 #if defined(__AVR__)
 typedef uint8_t pin_t;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#    define PIN_ADDRESS(p, offset) (_SFR_IO8(ADDRESS_BASE + ((p) >> PORT_SHIFTER) + (offset)))
+#    define setPinInput(pin) (PIN_ADDRESS(pin, 1) &= ~_BV((pin)&0xF))
+#    define setPinInputHigh(pin) (PIN_ADDRESS(pin, 1) &= ~_BV((pin)&0xF), PIN_ADDRESS(pin, 2) |= _BV((pin)&0xF))
+#    define setPinInputLow(pin) _Static_assert(0, "AVR processors cannot implement an input as pull low")
+#    define setPinOutput(pin) (PIN_ADDRESS(pin, 1) |= _BV((pin)&0xF))
+
+#    define writePinHigh(pin) (PIN_ADDRESS(pin, 2) |= _BV((pin)&0xF))
+#    define writePinLow(pin) (PIN_ADDRESS(pin, 2) &= ~_BV((pin)&0xF))
+#    define writePin(pin, level) ((level) ? writePinHigh(pin) : writePinLow(pin))
+
+#    define readPin(pin) ((bool)(PIN_ADDRESS(pin, 0) & _BV((pin)&0xF)))
+=======
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #    define setPinInput(pin) (DDRx_ADDRESS(pin) &= ~_BV((pin)&0xF))
 #    define setPinInputHigh(pin) (DDRx_ADDRESS(pin) &= ~_BV((pin)&0xF), PORTx_ADDRESS(pin) |= _BV((pin)&0xF))
 #    define setPinInputLow(pin) _Static_assert(0, "AVR processors cannot implement an input as pull low")
@@ -164,6 +183,10 @@ typedef uint8_t pin_t;
 #    define writePin(pin, level) ((level) ? writePinHigh(pin) : writePinLow(pin))
 
 #    define readPin(pin) ((bool)(PINx_ADDRESS(pin) & _BV((pin)&0xF)))
+<<<<<<< HEAD
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #elif defined(PROTOCOL_CHIBIOS)
 typedef ioline_t pin_t;
 
@@ -215,8 +238,16 @@ void send_string_with_delay_P(const char *str, uint8_t interval);
 void send_char(char ascii_code);
 
 // For tri-layer
+<<<<<<< HEAD
+<<<<<<< HEAD
+void     update_tri_layer(uint8_t layer1, uint8_t layer2, uint8_t layer3);
+uint32_t update_tri_layer_state(uint32_t state, uint8_t layer1, uint8_t layer2, uint8_t layer3);
+=======
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 void          update_tri_layer(uint8_t layer1, uint8_t layer2, uint8_t layer3);
 layer_state_t update_tri_layer_state(layer_state_t state, uint8_t layer1, uint8_t layer2, uint8_t layer3);
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
 
 void set_single_persistent_default_layer(uint8_t default_layer);
 
@@ -257,8 +288,8 @@ void tap_code16(uint16_t code);
 void backlight_init_ports(void);
 void backlight_task(void);
 void backlight_task_internal(void);
-void backlight_on(uint8_t backlight_pin);
-void backlight_off(uint8_t backlight_pin);
+void backlight_on(pin_t backlight_pin);
+void backlight_off(pin_t backlight_pin);
 
 #    ifdef BACKLIGHT_BREATHING
 void breathing_task(void);
@@ -285,5 +316,7 @@ uint16_t hex_to_keycode(uint8_t hex);
 
 void led_set_user(uint8_t usb_led);
 void led_set_kb(uint8_t usb_led);
+bool led_update_user(led_t led_state);
+bool led_update_kb(led_t led_state);
 
 void api_send_unicode(uint32_t unicode);

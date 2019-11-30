@@ -21,9 +21,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "keyboard.h"
 #include "action.h"
 
+<<<<<<< HEAD
+#if defined(LAYER_STATE_8BIT) || (defined(DYNAMIC_KEYMAP_ENABLE) && DYNAMIC_KEYMAP_LAYER_COUNT >= 8)
+=======
 #if defined(LAYER_STATE_8BIT)
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
 typedef uint8_t layer_state_t;
-#    define get_highest_layer(state) biton8(state)
+#    define get_highest_layer(state) biton(state)
 #elif defined(LAYER_STATE_16BIT)
 typedef uint16_t layer_state_t;
 #    define get_highest_layer(state) biton16(state)

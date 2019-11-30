@@ -59,6 +59,14 @@
 uint16_t bootloader_start;
 #endif
 
+<<<<<<< HEAD
+#define BOOT_SIZE_256 0b110
+#define BOOT_SIZE_512 0b100
+#define BOOT_SIZE_1024 0b010
+#define BOOT_SIZE_2048 0b000
+
+=======
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 // compatibility between ATMega8 and ATMega88
 #if !defined(MCUCSR)
 #    if defined(MCUSR)
@@ -81,11 +89,19 @@ void bootloader_jump(void) {
 #if !defined(BOOTLOADER_SIZE)
     uint8_t high_fuse = boot_lock_fuse_bits_get(GET_HIGH_FUSE_BITS);
 
+<<<<<<< HEAD
+    if (high_fuse & BOOT_SIZE_256) {
+        bootloader_start = (FLASH_SIZE - 512) >> 1;
+    } else if (high_fuse & BOOT_SIZE_512) {
+        bootloader_start = (FLASH_SIZE - 1024) >> 1;
+    } else if (high_fuse & BOOT_SIZE_1024) {
+=======
     if (high_fuse & ~(FUSE_BOOTSZ0 & FUSE_BOOTSZ1)) {
         bootloader_start = (FLASH_SIZE - 512) >> 1;
     } else if (high_fuse & ~(FUSE_BOOTSZ1)) {
         bootloader_start = (FLASH_SIZE - 1024) >> 1;
     } else if (high_fuse & ~(FUSE_BOOTSZ0)) {
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
         bootloader_start = (FLASH_SIZE - 2048) >> 1;
     } else {
         bootloader_start = (FLASH_SIZE - 4096) >> 1;

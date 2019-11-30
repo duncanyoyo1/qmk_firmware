@@ -35,12 +35,15 @@
 #endif
 #ifndef BOOTMAGIC_KEY_DEBUG_MOUSE
 #    define BOOTMAGIC_KEY_DEBUG_MOUSE KC_M
+<<<<<<< HEAD
+=======
 #endif
 #ifndef BOOTMAGIC_KEY_EE_HANDS_LEFT
 #    define BOOTMAGIC_KEY_EE_HANDS_LEFT KC_L
 #endif
 #ifndef BOOTMAGIC_KEY_EE_HANDS_RIGHT
 #    define BOOTMAGIC_KEY_EE_HANDS_RIGHT KC_R
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #endif
 
 /*

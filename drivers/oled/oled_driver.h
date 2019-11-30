@@ -140,6 +140,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Font render height
 #if !defined(OLED_FONT_HEIGHT)
 #    define OLED_FONT_HEIGHT 8
+<<<<<<< HEAD
+=======
 #endif
 
 #if !defined(OLED_TIMEOUT)
@@ -148,6 +150,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    else
 #        define OLED_TIMEOUT 60000
 #    endif
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #endif
 
 // OLED Rotation enum values are flags
@@ -200,6 +203,8 @@ void oled_write(const char *data, bool invert);
 // Advances the cursor to the next page, wiring ' ' to the remainder of the current page
 void oled_write_ln(const char *data, bool invert);
 
+void oled_write_raw(const char *data, uint16_t size);
+
 #if defined(__AVR__)
 // Writes a PROGMEM string to the buffer at current cursor position
 // Advances the cursor while writing, inverts the pixels if true
@@ -211,6 +216,8 @@ void oled_write_P(const char *data, bool invert);
 // Advances the cursor to the next page, wiring ' ' to the remainder of the current page
 // Remapped to call 'void oled_write_ln(const char *data, bool invert);' on ARM
 void oled_write_ln_P(const char *data, bool invert);
+
+void oled_write_raw_P(const char *data, uint16_t size);
 #else
 // Writes a string to the buffer at current cursor position
 // Advances the cursor while writing, inverts the pixels if true

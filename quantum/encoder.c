@@ -37,15 +37,16 @@ static pin_t encoders_pad_b[] = ENCODERS_PAD_B;
 
 static int8_t encoder_LUT[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
 
-static uint8_t encoder_state[NUMBER_OF_ENCODERS] = {0};
+static uint8_t encoder_state[NUMBER_OF_ENCODERS]  = {0};
+static int8_t  encoder_pulses[NUMBER_OF_ENCODERS] = {0};
 
 #ifdef SPLIT_KEYBOARD
 // right half encoders come over as second set of encoders
-static int8_t encoder_value[NUMBER_OF_ENCODERS * 2] = {0};
+static uint8_t encoder_value[NUMBER_OF_ENCODERS * 2] = {0};
 // row offsets for each hand
 static uint8_t thisHand, thatHand;
 #else
-static int8_t encoder_value[NUMBER_OF_ENCODERS] = {0};
+static uint8_t encoder_value[NUMBER_OF_ENCODERS] = {0};
 #endif
 
 __attribute__((weak)) void encoder_update_user(int8_t index, bool clockwise) {}
@@ -53,6 +54,8 @@ __attribute__((weak)) void encoder_update_user(int8_t index, bool clockwise) {}
 __attribute__((weak)) void encoder_update_kb(int8_t index, bool clockwise) { encoder_update_user(index, clockwise); }
 
 void encoder_init(void) {
+<<<<<<< HEAD
+=======
 #if defined(SPLIT_KEYBOARD) && defined(ENCODERS_PAD_A_RIGHT) && defined(ENCODERS_PAD_B_RIGHT)
     if (!isLeftHand) {
         const pin_t encoders_pad_a_right[] = ENCODERS_PAD_A_RIGHT;
@@ -64,6 +67,34 @@ void encoder_init(void) {
     }
 #endif
 
+<<<<<<< HEAD
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+    for (int i = 0; i < NUMBER_OF_ENCODERS; i++) {
+        setPinInputHigh(encoders_pad_a[i]);
+        setPinInputHigh(encoders_pad_b[i]);
+
+        encoder_state[i] = (readPin(encoders_pad_a[i]) << 0) | (readPin(encoders_pad_b[i]) << 1);
+    }
+}
+
+void encoder_read(void) {
+    for (int i = 0; i < NUMBER_OF_ENCODERS; i++) {
+        encoder_state[i] <<= 2;
+        encoder_state[i] |= (readPin(encoders_pad_a[i]) << 0) | (readPin(encoders_pad_b[i]) << 1);
+        encoder_value[i] += encoder_LUT[encoder_state[i] & 0xF];
+        if (encoder_value[i] >= ENCODER_RESOLUTION) {
+            encoder_update_kb(i, false);
+        }
+        if (encoder_value[i] <= -ENCODER_RESOLUTION) {  // direction is arbitrary here, but this clockwise
+            encoder_update_kb(i, true);
+        }
+        encoder_value[i] %= ENCODER_RESOLUTION;
+    }
+}
+
+#ifdef SPLIT_KEYBOARD
+void encoder_state_raw(uint8_t* slave_state) { memcpy(slave_state, encoder_state, sizeof(encoder_state)); }
+=======
     for (int i = 0; i < NUMBER_OF_ENCODERS; i++) {
         setPinInputHigh(encoders_pad_a[i]);
         setPinInputHigh(encoders_pad_b[i]);
@@ -78,14 +109,16 @@ void encoder_init(void) {
 }
 
 static void encoder_update(int8_t index, uint8_t state) {
-    encoder_value[index] += encoder_LUT[state & 0xF];
-    if (encoder_value[index] >= ENCODER_RESOLUTION) {
-        encoder_update_kb(index, false);
-    }
-    if (encoder_value[index] <= -ENCODER_RESOLUTION) { // direction is arbitrary here, but this clockwise
+    encoder_pulses[index] += encoder_LUT[state & 0xF];
+    if (encoder_pulses[index] >= ENCODER_RESOLUTION) {
+        encoder_value[index]++;
         encoder_update_kb(index, true);
     }
-    encoder_value[index] %= ENCODER_RESOLUTION;
+    if (encoder_pulses[index] <= -ENCODER_RESOLUTION) {  // direction is arbitrary here, but this clockwise
+        encoder_value[index]--;
+        encoder_update_kb(index, false);
+    }
+    encoder_pulses[index] %= ENCODER_RESOLUTION;
 }
 
 void encoder_read(void) {
@@ -99,13 +132,40 @@ void encoder_read(void) {
 #endif
     }
 }
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 
 #ifdef SPLIT_KEYBOARD
-void encoder_state_raw(uint8_t* slave_state) { memcpy(slave_state, encoder_state, sizeof(encoder_state)); }
+void encoder_state_raw(uint8_t* slave_state) { memcpy(slave_state, &encoder_value[thisHand], sizeof(uint8_t) * NUMBER_OF_ENCODERS); }
 
 void encoder_update_raw(uint8_t* slave_state) {
     for (int i = 0; i < NUMBER_OF_ENCODERS; i++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        encoder_value[NUMBER_OF_ENCODERS + i] += encoder_LUT[slave_state[i] & 0xF];
+        if (encoder_value[NUMBER_OF_ENCODERS + i] >= ENCODER_RESOLUTION) {
+            encoder_update_kb(NUMBER_OF_ENCODERS + i, false);
+        }
+        if (encoder_value[NUMBER_OF_ENCODERS + i] <= -ENCODER_RESOLUTION) {  // direction is arbitrary here, but this clockwise
+            encoder_update_kb(NUMBER_OF_ENCODERS + i, true);
+        }
+        encoder_value[NUMBER_OF_ENCODERS + i] %= ENCODER_RESOLUTION;
+=======
         encoder_update(i + thatHand, slave_state[i]);
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
+=======
+        uint8_t index = i + thatHand;
+        int8_t  delta = slave_state[i] - encoder_value[index];
+        while (delta > 0) {
+            delta--;
+            encoder_value[index]++;
+            encoder_update_kb(index, true);
+        }
+        while (delta < 0) {
+            delta++;
+            encoder_value[index]--;
+            encoder_update_kb(index, false);
+        }
+>>>>>>> 847fb171fd728f665936d6604d3c4c0b78b92719
     }
 }
 #endif

@@ -36,8 +36,16 @@ typedef union {
         bool swap_grave_esc : 1;
         bool swap_backslash_backspace : 1;
         bool nkro : 1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         bool swap_lctl_lgui : 1;
         bool swap_rctl_rgui : 1;
+>>>>>>> 4d517d358b4cbab5754cfc1ca2649787a62b27c8
+=======
+        bool swap_lctl_lgui : 1;
+        bool swap_rctl_rgui : 1;
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
     };
 } keymap_config_t;
 

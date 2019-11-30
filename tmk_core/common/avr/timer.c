@@ -42,7 +42,11 @@ void timer_init(void) {
 #elif TIMER_PRESCALER == 1024
     uint8_t prescaler = _BV(CS00) | _BV(CS02);
 #else
+<<<<<<< HEAD
+#    error "Timer prescaler value is NOT vaild."
+=======
 #    error "Timer prescaler value is not valid"
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #endif
 
 #ifndef __AVR_ATmega32A__
@@ -51,13 +55,21 @@ void timer_init(void) {
     TCCR0B = prescaler;
 
     OCR0A  = TIMER_RAW_TOP;
+<<<<<<< HEAD
+    TIMSK0 = (1 << OCIE0A);
+=======
     TIMSK0 = _BV(OCIE0A);
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #else
     // Timer0 CTC mode
     TCCR0 = _BV(WGM01) | prescaler;
 
     OCR0  = TIMER_RAW_TOP;
+<<<<<<< HEAD
+    TIMSK = (1 << OCIE0);
+=======
     TIMSK = _BV(OCIE0);
+>>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
 #endif
 }
 
