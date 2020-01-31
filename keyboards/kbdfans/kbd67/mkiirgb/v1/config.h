@@ -1,10 +1,18 @@
 #pragma once
 #include "config_common.h"
+<<<<<<< HEAD
 #define VENDOR_ID       0x4B42 // KB
 #define PRODUCT_ID      0x1224
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    KBDfans
 #define PRODUCT         kbd67mkiirgb v1
+=======
+#define VENDOR_ID       0xFEED
+#define PRODUCT_ID      0x1224
+#define DEVICE_VER      0x0001
+#define MANUFACTURER    KBDfans
+#define PRODUCT         kbd67mkiirgb
+>>>>>>> Un-doing eeprom breakage.
 #define DESCRIPTION     kbd67mkii rgb keyboard
 
 #define MATRIX_ROWS 5
@@ -42,4 +50,8 @@
 #define DRIVER_COUNT 2
 #define DRIVER_1_LED_TOTAL 35
 #define DRIVER_2_LED_TOTAL 32
+<<<<<<< HEAD
 #define DRIVER_LED_TOTAL (DRIVER_1_LED_TOTAL + DRIVER_2_LED_TOTAL)
+=======
+#define DRIVER_LED_TOTAL (DRIVER_1_LED_TOTAL + DRIVER_2_LED_TOTAL)
+>>>>>>> Un-doing eeprom breakage.
