@@ -17,7 +17,11 @@ def yesno(prompt, *args, default=None, **kwargs):
     Arguments:
         prompt
 <<<<<<< HEAD
+<<<<<<< HEAD
             The prompt to present to the user. Can include ANSI and format strings like milc's `cli.echo()`.
+=======
+            The prompt to present to the user. Can include ANSI and format strings like milc's `cli.print()`.
+>>>>>>> Un-doing eeprom breakage.
 =======
             The prompt to present to the user. Can include ANSI and format strings like milc's `cli.print()`.
 >>>>>>> Un-doing eeprom breakage.
@@ -48,9 +52,15 @@ def yesno(prompt, *args, default=None, **kwargs):
 
     while True:
 <<<<<<< HEAD
+<<<<<<< HEAD
         cli.echo('')
         answer = input(format_ansi(prompt % args))
         cli.echo('')
+=======
+        print()
+        answer = input(format_ansi(prompt % args))
+        print()
+>>>>>>> Un-doing eeprom breakage.
 =======
         print()
         answer = input(format_ansi(prompt % args))
@@ -68,6 +78,7 @@ def yesno(prompt, *args, default=None, **kwargs):
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 def question(prompt, *args, default=None, confirm=False, answer_type=str, validate=None, **kwargs):
     """Prompt the user to answer a question with a free-form input.
 
@@ -75,16 +86,22 @@ def question(prompt, *args, default=None, confirm=False, answer_type=str, valida
         prompt
             The prompt to present to the user. Can include ANSI and format strings like milc's `cli.echo()`.
 =======
+=======
+>>>>>>> Un-doing eeprom breakage.
 def question(prompt, *args, default=None, confirm=False, answer_type=str, **kwargs):
     """Prompt the user to answer a question with a free-form input.
 
         prompt
             The prompt to present to the user. Can include ANSI and format strings like milc's `cli.print()`.
+<<<<<<< HEAD
+>>>>>>> Un-doing eeprom breakage.
+=======
 >>>>>>> Un-doing eeprom breakage.
 
         default
             The value to return when the user doesn't enter any value. Use None to prompt until they enter a value.
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         confirm
             Present the user with a confirmation dialog before accepting their answer.
@@ -100,6 +117,10 @@ def question(prompt, *args, default=None, confirm=False, answer_type=str, **kwar
         answer_type
             Specify a type function for the answer. Will re-prompt the user if the function raises any errors. Common choices here include int, float, and decimal.Decimal.
 >>>>>>> Un-doing eeprom breakage.
+=======
+        answer_type
+            Specify a type function for the answer. Will re-prompt the user if the function raises any errors. Common choices here include int, float, and decimal.Decimal.
+>>>>>>> Un-doing eeprom breakage.
     """
     if not args and kwargs:
         args = kwargs
@@ -108,6 +129,7 @@ def question(prompt, *args, default=None, confirm=False, answer_type=str, **kwar
         prompt = '%s [%s] ' % (prompt, default)
 
     while True:
+<<<<<<< HEAD
 <<<<<<< HEAD
         cli.echo('')
         answer = input(format_ansi(prompt % args))
@@ -119,12 +141,17 @@ def question(prompt, *args, default=None, confirm=False, answer_type=str, **kwar
 
             elif confirm:
 =======
+=======
+>>>>>>> Un-doing eeprom breakage.
         print()
         answer = input(format_ansi(prompt % args))
         print()
 
         if answer:
             if confirm:
+<<<<<<< HEAD
+>>>>>>> Un-doing eeprom breakage.
+=======
 >>>>>>> Un-doing eeprom breakage.
                 if yesno('Is the answer "%s" correct?', answer, default=True):
                     try:
@@ -132,7 +159,10 @@ def question(prompt, *args, default=None, confirm=False, answer_type=str, **kwar
                     except Exception as e:
                         cli.log.error('Could not convert answer (%s) to type %s: %s', answer, answer_type.__name__, str(e))
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> Un-doing eeprom breakage.
 =======
 >>>>>>> Un-doing eeprom breakage.
             else:
@@ -143,6 +173,7 @@ def question(prompt, *args, default=None, confirm=False, answer_type=str, **kwar
 
         elif default is not None:
             return default
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -212,5 +243,7 @@ def choice(heading, options, *args, default=None, confirm=False, prompt='Please 
 
         # Return the answer they chose.
         return options[answer]
+=======
+>>>>>>> Un-doing eeprom breakage.
 =======
 >>>>>>> Un-doing eeprom breakage.

@@ -5,7 +5,11 @@ YouTube channel.
 
 It is used on his   
 <<<<<<< HEAD
+<<<<<<< HEAD
 * [Novelkeys NK65](https://github.com/qmk/qmk_firmware/tree/master/keyboards/nk65)
+=======
+* [Novelkeys NK65](https://github.com/qmk/qmk_firmware/tree/master/keyboards/nk65) 
+>>>>>>> Un-doing eeprom breakage.
 =======
 * [Novelkeys NK65](https://github.com/qmk/qmk_firmware/tree/master/keyboards/nk65) 
 >>>>>>> Un-doing eeprom breakage.

@@ -5,7 +5,11 @@
     "height": 5.25,
     "layouts": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "LAYOUT": {
+=======
+        "LAYOUT_default": {
+>>>>>>> Un-doing eeprom breakage.
 =======
         "LAYOUT_default": {
 >>>>>>> Un-doing eeprom breakage.
