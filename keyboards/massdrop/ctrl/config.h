@@ -92,7 +92,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DEBUG_BOOT_TRACING_PIN      23
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCE 5
+#define DEBOUNCE 6
 
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 //#define LOCKING_SUPPORT_ENABLE
@@ -100,7 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define LOCKING_RESYNC_ENABLE
 
 /* Force boot in NKRO mode */
-//#define FORCE_NKRO
+#define FORCE_NKRO
 
 /*
  * Feature disable options
