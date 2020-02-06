@@ -4,6 +4,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >Please note this branch has the SmartEEPROM feature enabled. To make it work you will need to flash with a mdloader that supports the SmartEEPROM feature. A version of the mdloader with patches can be found on my [GitHub](https://github.com/duncanyoyo1/mdloader/tree/master). You will need to build the mdloader for your operating system.
 =======
   Please note this branch has the SmartEEPROM feature enabled. To make it work you will need to flash with a mdloader that supports the SmartEEPROM feature. A version of the mdloader with patches can be found on my [GitHub](https://github.com/duncanyoyo1/mdloader/tree/enable-smart-eeprom). You will need to build the mdloader for your operating system.
@@ -11,6 +12,9 @@
 =======
 >Please note this branch has the SmartEEPROM feature enabled. To make it work you will need to flash with a mdloader that supports the SmartEEPROM feature. A version of the mdloader with patches can be found on my [GitHub](https://github.com/duncanyoyo1/mdloader/tree/master). You will need to build the mdloader for your operating system.
 >>>>>>> Update readme.md
+=======
+>Please note this branch has the SmartEEPROM feature enabled. To make it work you will need to flash with a mdloader that supports the SmartEEPROM feature. A version of the mdloader with patches can be found on my [GitHub](https://github.com/duncanyoyo1/mdloader/tree/master). You will need to build the mdloader for your operating system.
+>>>>>>> 1c760c772769bb352777e239c23c0560b4593782
 
 This layout is similar default layout, with Caps Lock as Ctrl unless Left Shift is held, then it will act as Caps Lock. I have also moved the normal Fn layer to Fn+Menu. This allows the use of the numpad with just Fn.
 

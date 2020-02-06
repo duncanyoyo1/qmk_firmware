@@ -26,6 +26,7 @@
 <<<<<<< HEAD
 __attribute__((aligned(4))) static uint8_t buffer[EEPROM_SIZE];
 volatile uint8_t *SmartEEPROM8 = (uint8_t *) SEEPROM_ADDR;
+<<<<<<< HEAD
 
 uint8_t eeprom_read_byte(const uint8_t *addr) {
     uintptr_t offset = (uintptr_t)addr;
@@ -62,13 +63,20 @@ void eeprom_write_byte(uint8_t *addr, uint8_t value) {
 =======
 volatile uint8_t *SmartEEPROM8 = (uint8_t *) 0x44000000;
 uint8_t buffer[EEPROM_SIZE];
+=======
+>>>>>>> 1c760c772769bb352777e239c23c0560b4593782
 
 uint8_t eeprom_read_byte(const uint8_t *addr) {
 <<<<<<< HEAD
 	uintptr_t offset = (uintptr_t)addr;
 =======
     uintptr_t offset = (uintptr_t)addr;
+<<<<<<< HEAD
 >>>>>>> Add SmartEEPROM support in eeprom.c
+=======
+    if (offset >= EEPROM_SIZE)
+        return 0xff;
+>>>>>>> 1c760c772769bb352777e239c23c0560b4593782
 
     if (NVMCTRL->SEESTAT.bit.PSZ == 0 || NVMCTRL->SEESTAT.bit.SBLK == 0)
         return buffer[offset];
@@ -76,17 +84,30 @@ uint8_t eeprom_read_byte(const uint8_t *addr) {
     int timeout = 10000;
     while (NVMCTRL->SEESTAT.bit.BUSY && timeout-- > 0)
         ;
+<<<<<<< HEAD
     return SmartEEPROM8[offset];
+=======
+    if (!NVMCTRL->SEESTAT.bit.BUSY)
+        return SmartEEPROM8[offset];
+
+    return 0xff;
+>>>>>>> 1c760c772769bb352777e239c23c0560b4593782
 }
 
 void eeprom_write_byte(uint8_t *addr, uint8_t value) {
     uintptr_t offset = (uintptr_t)addr;
+<<<<<<< HEAD
+=======
+    if (offset >= EEPROM_SIZE)
+        return;
+>>>>>>> 1c760c772769bb352777e239c23c0560b4593782
 
     if (NVMCTRL->SEESTAT.bit.PSZ == 0 || NVMCTRL->SEESTAT.bit.SBLK == 0) {
         buffer[offset] = value;
         return;
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	SmartEEPROM8[offset] = value;
 >>>>>>> Add smart eeprom support for massdrop keyboards
@@ -97,6 +118,13 @@ void eeprom_write_byte(uint8_t *addr, uint8_t value) {
 
     SmartEEPROM8[offset] = value;
 >>>>>>> Add SmartEEPROM support in eeprom.c
+=======
+    int timeout = 10000;
+    while (NVMCTRL->SEESTAT.bit.BUSY && timeout-- > 0)
+        ;
+    if (!NVMCTRL->SEESTAT.bit.BUSY)
+        SmartEEPROM8[offset] = value;
+>>>>>>> 1c760c772769bb352777e239c23c0560b4593782
 }
 
 uint16_t eeprom_read_word(const uint16_t *addr) {
