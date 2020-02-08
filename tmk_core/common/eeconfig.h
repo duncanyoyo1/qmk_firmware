@@ -60,7 +60,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =======
 // TODO: Combine these into a single word and single block of EEPROM
 #define EECONFIG_KEYMAP_UPPER_BYTE (uint8_t *)33
+<<<<<<< HEAD
 >>>>>>> 45805c06b32c482448a4b3187c75dfb52b5d4fdd
+=======
+// Size of EEPROM being used, other code can refer to this for available EEPROM
+#define EECONFIG_SIZE 34
+>>>>>>> 8df16a5a557ee7c29a90b7de38234dbabfd98e8d
 /* debug bit */
 #define EECONFIG_DEBUG_ENABLE (1 << 0)
 #define EECONFIG_DEBUG_MATRIX (1 << 1)
