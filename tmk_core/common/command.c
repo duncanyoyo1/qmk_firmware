@@ -160,6 +160,9 @@ static void print_version(void) {
     print("BUILD:  (" __DATE__ ")\n");
 #else
     print("BUILD: " STR(QMK_VERSION) " (" __TIME__ " " __DATE__ ")\n");
+#    ifdef PROTOCOL_CHIBIOS
+    print("CHIBIOS: " STR(CHIBIOS_VERSION) ", CONTRIB: " STR(CHIBIOS_CONTRIB_VERSION) "\n");
+#    endif
 #endif
 
     /* build options */
@@ -192,8 +195,8 @@ static void print_version(void) {
 #ifdef NKRO_ENABLE
           " NKRO"
 #endif
-#ifdef KEYMAP_SECTION_ENABLE
-          " KEYMAP_SECTION"
+#ifdef LINK_TIME_OPTIMIZATION_ENABLE
+          " LTO"
 #endif
 
           " " STR(BOOTLOADER_SIZE) "\n");
