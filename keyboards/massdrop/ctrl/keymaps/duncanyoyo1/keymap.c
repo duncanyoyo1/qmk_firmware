@@ -67,6 +67,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
 };
 
+typedef enum {
+    RGB_MODE_ALL,
+    RGB_MODE_KEYLIGHT_MODIFIER_INDICATOR,
+    RGB_MODE_UNDERGLOW,
+    RGB_MODE_NONE,
+} ctrl_rgb_mode_t;
+
+typedef union {
+    uint32_t raw;
+    struct {
+        ctrl_rgb_mode_t rgb_mode :8;
+    };
+} user_config_t;
+
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
 };
@@ -75,9 +89,36 @@ void matrix_init_user(void) {
 void matrix_scan_user(void) {
 };
 
-#define MODS_SHIFT  (get_mods() & MOD_BIT(KC_LSHIFT) || get_mods() & MOD_BIT(KC_RSHIFT))
-#define MODS_CTRL  (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
-#define MODS_ALT  (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
+void keyboard_post_init_user(void) {
+    // Set pre-configured RGB mode
+    user_config_t ctrl_config;
+    ctrl_config.raw = eeconfig_read_user();
+    switch (ctrl_config.rgb_mode) {
+        case RGB_MODE_ALL:
+            rgb_matrix_set_flags(LED_FLAG_ALL);
+            rgb_matrix_enable_noeeprom();
+            break;
+        case RGB_MODE_KEYLIGHT_MODIFIER_INDICATOR:
+            rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR);
+            rgb_matrix_set_color_all(0, 0, 0);
+            break;
+        case RGB_MODE_UNDERGLOW:
+            rgb_matrix_set_flags(LED_FLAG_UNDERGLOW);
+            rgb_matrix_set_color_all(0, 0, 0);
+            break;
+        case RGB_MODE_NONE:
+            rgb_matrix_set_flags(LED_FLAG_NONE);
+            rgb_matrix_disable_noeeprom();
+            break;
+        default:
+            // Unknown RGB mode, do nothing
+            break;
+    }
+}
+
+#define MODS_SHIFT  (get_mods() & MOD_MASK_SHIFT)
+#define MODS_CTRL   (get_mods() & MOD_MASK_CTRL)
+#define MODS_ALT    (get_mods() & MOD_MASK_ALT)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint32_t key_timer;
@@ -124,28 +165,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case RGB_TOG:
             if (record->event.pressed) {
-              switch (rgb_matrix_get_flags()) {
-                case LED_FLAG_ALL: {
-                    rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER);
-                    rgb_matrix_set_color_all(0, 0, 0);
-                  }
-                  break;
-                case LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER: {
-                    rgb_matrix_set_flags(LED_FLAG_UNDERGLOW);
-                    rgb_matrix_set_color_all(0, 0, 0);
-                  }
-                  break;
-                case LED_FLAG_UNDERGLOW: {
-                    rgb_matrix_set_flags(LED_FLAG_NONE);
-                    rgb_matrix_disable_noeeprom();
-                  }
-                  break;
-                default: {
-                    rgb_matrix_set_flags(LED_FLAG_ALL);
-                    rgb_matrix_enable_noeeprom();
-                  }
-                  break;
-              }
+                user_config_t ctrl_config;
+                switch (rgb_matrix_get_flags()) {
+                    case LED_FLAG_ALL: {
+                        ctrl_config.rgb_mode = RGB_MODE_KEYLIGHT_MODIFIER_INDICATOR;
+                        rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR);
+                        rgb_matrix_set_color_all(0, 0, 0);
+                    }
+                    break;
+                    case (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER | LED_FLAG_INDICATOR): {
+                        ctrl_config.rgb_mode = RGB_MODE_UNDERGLOW;
+                        rgb_matrix_set_flags(LED_FLAG_UNDERGLOW);
+                        rgb_matrix_set_color_all(0, 0, 0);
+                    }
+                    break;
+                    case LED_FLAG_UNDERGLOW: {
+                        ctrl_config.rgb_mode = RGB_MODE_NONE;
+                        rgb_matrix_set_flags(LED_FLAG_NONE);
+                        rgb_matrix_disable_noeeprom();
+                    }
+                    break;
+                    default: {
+                        ctrl_config.rgb_mode = RGB_MODE_ALL;
+                        rgb_matrix_set_flags(LED_FLAG_ALL);
+                        rgb_matrix_enable_noeeprom();
+                    }
+                    break;
+                }
+                eeconfig_update_user(ctrl_config.raw);
             }
             return false;
         default:
